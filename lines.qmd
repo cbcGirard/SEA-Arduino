@@ -1,0 +1,39 @@
+---
+title: Line following car
+---
+
+::: {.callout-objective}
+- Learn how to use infrared sensors to detect lines
+- Build a simple line following car that can follow a line on the ground
+:::
+
+# Background
+### Line Following Car {ico="mdi:car"}
+A line following car is a simple robot that can follow a line on the ground. It uses sensors to detect the line and adjust its direction accordingly. The most common sensors for this purpose are infrared (IR) sensors, which can detect the difference in reflectivity between the line and the surrounding surface.
+
+::: {#fig-line-following .parts layout="[1,1]"}
+![IR sensor in action](/images/ir_diagram.png)
+:::
+
+When the sensor is over a light-colored or reflective surface, the IR light reflects back to the sensor, causing it to output a low signal (0). When the sensor is over a dark surface, like our line, the IR light does not reflect back and the sensor returns a high signal (1). By reading the signals from multiple sensors, the car can determine its position relative to the line and adjust its motors accordingly.
+
+| Left | Center | Right | Action |
+|------|--------|-------|--------|
+| 0    | 0      | 0     | Stop   |
+| 0    | 1      | 0     | Go straight |
+| 1    | 0      | 0     | Turn right |
+| 0    | 0      | 1     | Turn left |
+| 1    | 1      | 0     | Turn *slight* right |
+
+# Wiring
+
+![](/images/ir_wiring.png){width=100%}
+
+# Code
+
+```{.cpp include="sketches/2-Lines/2-Lines.ino"}
+```
+
+# Modifications
+
+To adjust the speed, you might change the values you give to `driveRight()` and `driveLeft()`. Similarly, changing the value of `delay` in line 100 will change how long the car waits before checking the sensors again. What happens if the delay is too short? Too long?
