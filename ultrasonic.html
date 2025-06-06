@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Dr.&nbsp;CBC Girard">
+
+<title>Obstacle Avoidance – SEA-Arduino</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-20051e017c6b19db8f2a6796cc96be8a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/iconify-icon-2.1.0/iconify-icon.min.js" type="module"></script>
+<script src="site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
+<script src="site_libs/quarto-contrib/iconify-2.1.0/iconify-pseudolist.js"></script>
+<link href="site_libs/quarto-contrib/iconify-2.1.0/watermark.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/custom-callouts-0.0.0/custom-callouts.scss" rel="stylesheet" type="text/css">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+window.MathJax = {
+tex: {
+    tags: 'ams'
+}
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">SEA-Arduino</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./intro.html"> 
+<span class="menu-text">Intro</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./lines.html"> 
+<span class="menu-text">Line following</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./ultrasonic.html" aria-current="page"> 
+<span class="menu-text">Obstacle avoidance</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./final.html"> 
+<span class="menu-text">Finale</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">1</span> Background</a>
+  <ul class="collapse">
+  <li><a href="#ultrasonic-sensors" id="toc-ultrasonic-sensors" class="nav-link" data-scroll-target="#ultrasonic-sensors"><span class="header-section-number">1.0.1</span> <iconify-icon inline="" icon="akar-icons:sound-on"></iconify-icon>Ultrasonic Sensors</a></li>
+  <li><a href="#wiring" id="toc-wiring" class="nav-link" data-scroll-target="#wiring"><span class="header-section-number">1.1</span> Wiring</a></li>
+  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code"><span class="header-section-number">1.2</span> Code</a>
+  <ul class="collapse">
+  <li><a href="#running-the-code" id="toc-running-the-code" class="nav-link" data-scroll-target="#running-the-code"><span class="header-section-number">1.2.1</span> Running the code</a></li>
+  <li><a href="#serial-communication" id="toc-serial-communication" class="nav-link" data-scroll-target="#serial-communication"><span class="header-section-number">1.2.2</span> <iconify-icon inline="" icon="mdi:cable-data"></iconify-icon>Serial Communication</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#servo-motor" id="toc-servo-motor" class="nav-link" data-scroll-target="#servo-motor"><span class="header-section-number">2</span> Servo Motor</a>
+  <ul class="collapse">
+  <li><a href="#background-1" id="toc-background-1" class="nav-link" data-scroll-target="#background-1"><span class="header-section-number">2.1</span> Background</a>
+  <ul class="collapse">
+  <li><a href="#hobby-servo-motors" id="toc-hobby-servo-motors" class="nav-link" data-scroll-target="#hobby-servo-motors"><span class="header-section-number">2.1.1</span> <iconify-icon inline="" icon="tabler:circuit-motor"></iconify-icon>Hobby Servo Motors</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#wiring-1" id="toc-wiring-1" class="nav-link" data-scroll-target="#wiring-1"><span class="header-section-number">3</span> Wiring</a></li>
+  <li><a href="#code-1" id="toc-code-1" class="nav-link" data-scroll-target="#code-1"><span class="header-section-number">4</span> Code</a></li>
+  <li><a href="#modifications" id="toc-modifications" class="nav-link" data-scroll-target="#modifications"><span class="header-section-number">5</span> Modifications</a>
+  <ul class="collapse">
+  <li><a href="#check-more-directions" id="toc-check-more-directions" class="nav-link" data-scroll-target="#check-more-directions"><span class="header-section-number">5.1</span> Check more directions</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Obstacle Avoidance</h1>
+<p class="subtitle lead">Ultrasonic sensor and servo motor</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p><a href="https://cbcgirard.github.io">Dr.&nbsp;CBC Girard</a> <a href="mailto:cgirard@chapman.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-objective no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<iconify-icon inline="" icon="clarity:bullseye-line" font-size="1.5em"></iconify-icon>&nbsp;Objective:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="callout-objective">
+<ul>
+<li>Learn how to use an ultrasonic sensor to detect obstacles</li>
+<li>Learn how to use a servo motor to point the sensor in different directions</li>
+<li>Combine the two to build a car that avoids obstacles</li>
+</ul>
+</div>
+</div>
+</div>
+<section id="background" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Background</h1>
+<section id="ultrasonic-sensors" class="level3" data-ico="akar-icons:sound-on" data-number="1.0.1">
+<h3 data-ico="akar-icons:sound-on" data-number="1.0.1" class="anchored" data-anchor-id="ultrasonic-sensors"><span class="header-section-number">1.0.1</span> <iconify-icon inline="" icon="akar-icons:sound-on"></iconify-icon>Ultrasonic Sensors</h3>
+<p>The sensor module in your kit is basically an electronic bat (the animal, not the baseball equipment): one of its metal cylinders is a speaker, and the other a microphone. By sending out a burst of sound and listening for the echo, the sensor can determine how far away an object is.</p>
+<div id="fig-ultrasonic-timing" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ultrasonic-timing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/ultrasonic_timing.svg" class="img-fluid figure-img"></p>
+<figcaption>Timing diagram</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ultrasonic-timing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Timing diagram of ultrasonic sensor operation. The sensor sends out a burst of sound when triggered, then listens for the echo; it then sets the <code>Echo</code> pin high for the same amount of time it took for the sound to return. The Arduino can measure this time to determine the distance to the object that reflected the sound.
+</figcaption>
+</figure>
+</div>
+<p>The speed of sound is about 340 m/s in air, and the echo’s delay represents <em>twice</em> the distance to the object (since the sound has to travel to the object and back). The Arduino can measure this delay with its <code>pulseIn()</code> function (line 60), which returns the time in microseconds that a pin is high. The conversion from time to distance is straightforward:</p>
+<p><span class="math display">\[\begin{align*}
+\text{distance} &amp;= \frac{1}{2} \times \text{speed} \times \text{time} \\
+&amp;= \frac{1}{2} \times 340 \, \text{m/s} \times \frac{\text{time}}{1,000,000 \, \mu\text{s/s}} \times 100 \, \text{cm/m} \\
+    &amp;\approx \frac{1}{59}\, \text{cm/}\mu\text{s} \times \text{time}
+    \end{align*}\]</span></p>
+</section>
+<section id="wiring" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="wiring"><span class="header-section-number">1.1</span> Wiring</h2>
+<p><img src="./images/ultrasonic_wiring.png" class="img-fluid" style="width:100.0%"></p>
+</section>
+<section id="code" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="code"><span class="header-section-number">1.2</span> Code</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">// Pin definitions for the ultrasonic sensor</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="dt">int</span> pinTrigger <span class="op">=</span> A1<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="dt">int</span> pinEcho <span class="op">=</span> A0<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="dt">float</span> checkDistance<span class="op">()</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="op">{</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>  digitalWrite<span class="op">(</span>pinTrigger<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>  delayMicroseconds<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>  digitalWrite<span class="op">(</span>pinTrigger<span class="op">,</span> HIGH<span class="op">);</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>  delayMicroseconds<span class="op">(</span><span class="dv">10</span><span class="op">);</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>  digitalWrite<span class="op">(</span>pinTrigger<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>  <span class="dt">float</span> distance <span class="op">=</span> pulseIn<span class="op">(</span>pinEcho<span class="op">,</span> HIGH<span class="op">)</span> <span class="op">/</span> <span class="fl">58.00</span><span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>  delay<span class="op">(</span><span class="dv">10</span><span class="op">);</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>  <span class="cf">return</span> distance<span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="op">}</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="dt">void</span> setup<span class="op">()</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="op">{</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a>  Serial<span class="op">.</span>begin<span class="op">(</span><span class="dv">9600</span><span class="op">);</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a></span>
+<span id="cb1-21"><a href="#cb1-21"></a>  pinMode<span class="op">(</span>pinTrigger<span class="op">,</span> OUTPUT<span class="op">);</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a>  pinMode<span class="op">(</span>pinEcho<span class="op">,</span> INPUT<span class="op">);</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a><span class="op">}</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a></span>
+<span id="cb1-25"><a href="#cb1-25"></a><span class="dt">void</span> loop<span class="op">()</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a><span class="op">{</span></span>
+<span id="cb1-27"><a href="#cb1-27"></a>  <span class="co">// Check for obstacles in front</span></span>
+<span id="cb1-28"><a href="#cb1-28"></a>  <span class="dt">float</span> distance <span class="op">=</span> checkDistance<span class="op">();</span></span>
+<span id="cb1-29"><a href="#cb1-29"></a></span>
+<span id="cb1-30"><a href="#cb1-30"></a>    Serial<span class="op">.</span>print<span class="op">(</span><span class="st">"Distance: "</span><span class="op">);</span></span>
+<span id="cb1-31"><a href="#cb1-31"></a>    Serial<span class="op">.</span>print<span class="op">(</span>distance<span class="op">);</span></span>
+<span id="cb1-32"><a href="#cb1-32"></a>    Serial<span class="op">.</span>println<span class="op">(</span><span class="st">" cm"</span><span class="op">);</span></span>
+<span id="cb1-33"><a href="#cb1-33"></a></span>
+<span id="cb1-34"><a href="#cb1-34"></a>    <span class="co">// Delay for a second so *we* can read the output</span></span>
+<span id="cb1-35"><a href="#cb1-35"></a>    delay<span class="op">(</span><span class="dv">1000</span><span class="op">);</span></span>
+<span id="cb1-36"><a href="#cb1-36"></a></span>
+<span id="cb1-37"><a href="#cb1-37"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="running-the-code" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="running-the-code"><span class="header-section-number">1.2.1</span> Running the code</h3>
+<p>When you first upload the code, you won’t be able to tell it’s running. To see what’s happening, you’ll need open the <span data-ico="uil:search" data-flip="horizontal"><iconify-icon inline="" icon="uil:search"></iconify-icon>Serial Monitor</span> in the top-right of the IDE. You should see the distance to the nearest object printed out every second or so. If you hold your hand in front of the sensor, you should see the distance change as you move your hand closer or farther away.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/serial_monitor.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Accessing the serial monitor</figcaption>
+</figure>
+</div>
+</section>
+<section id="serial-communication" class="level3" data-ico="mdi:cable-data" data-number="1.2.2">
+<h3 data-ico="mdi:cable-data" data-number="1.2.2" class="anchored" data-anchor-id="serial-communication"><span class="header-section-number">1.2.2</span> <iconify-icon inline="" icon="mdi:cable-data"></iconify-icon>Serial Communication</h3>
+<p>Using the same USB cable you used to program the Arduino, you can transmit data between the computer and Arduino <em>as part of your running program</em>. Frequently, you’ll want to use an Arduino for fast, consistently timed measurements in the real world, but then analyze and display that data on your computer, where you have more processing power and storage.</p>
+<p>The IDE’s <span data-ico="uil:search" data-flip="horizontal"><iconify-icon inline="" icon="uil:search"></iconify-icon>Serial Monitor</span> (top-right of the window) allows you to see the data the Arduino is sending back to the computer, and the <span data-ico="icon-park-outline:waves"><iconify-icon inline="" icon="icon-park-outline:waves"></iconify-icon>Serial Plotter</span> (next to the Serial Monitor) can graph that data in real time. You can also write your own programs to read this data and do more complex analysis and real-time visualization, or even control the Arduino based on the data it sends back.</p>
+<div class="callout callout-style-default callout-troubleshooting no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<iconify-icon inline="" icon="grommet-icons:troubleshoot" font-size="2em"></iconify-icon>&nbsp;Troubleshooting
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="callout-troubleshooting">
+<p>The Arduino’s serial port is a UART (Universal Asynchronous Receiver/Transmitter) connection, which means there isn’t a shared clock signal between the Arduino and your computer, and both devices have to agree on how quickly data is transmitted (called the <strong>baud rate</strong>).</p>
+<p>If the text in the Serial Monitor is garbled, or you’re not seeing any data at all, you might have the wrong baud rate set. In the code, this will be the number you pass to <code>Serial.begin()</code> in the <code>setup()</code> function, which then configures the Arduino to communicate at that speed; in the Serial Monitor, it will be the number in the bottom-right corner of the window. Make sure these numbers match!</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="servo-motor" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Servo Motor</h1>
+<section id="background-1" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="background-1"><span class="header-section-number">2.1</span> Background</h2>
+<section id="hobby-servo-motors" class="level3" data-ico="tabler:circuit-motor" data-number="2.1.1">
+<h3 data-ico="tabler:circuit-motor" data-number="2.1.1" class="anchored" data-anchor-id="hobby-servo-motors"><span class="header-section-number">2.1.1</span> <iconify-icon inline="" icon="tabler:circuit-motor"></iconify-icon>Hobby Servo Motors</h3>
+<p>For small, low-cost applications like radio-controlled toys, hobby servos are a common way of generating precise movements through closed-loop control. Typically, the output shaft is linked to a potentiometer, which allows the motor to sense its position. When the motor is set to a different position, the onboard electronics sense the difference between actual and intended position and drive the internal DC motor until the two match (see <a href="#fig-servos" class="quarto-xref">Figure&nbsp;2</a>).</p>
+<p>Because the servo’s gearing greatly reduces the speed of the motor, the simple DC motor is able to adjust the position of the output shaft with high precision—fractions of a full rotation. This makes hobby servos ideal for applications like steering in radio-controlled cars, or controlling the angle of a robotic arm.</p>
+<div id="fig-servos" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-servos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cdn.sparkfun.com/assets/learn_tutorials/5/2/6/servo-samples.jpg" class="parts img-fluid figure-img"></p>
+<figcaption>Various hobby servos</figcaption>
+</figure>
+</div>
+</div>
+<div class="cite quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<p>Image from <a href="https://learn.sparkfun.com/tutorials/hobby-servo-tutorial#servo-motor-background">Sparkfun</a></p>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cdn.sparkfun.com/assets/learn_tutorials/5/2/6/servo-guts_1.jpg" class="parts img-fluid figure-img"></p>
+<figcaption>Servo internals</figcaption>
+</figure>
+</div>
+</div>
+<div class="cite quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<p>Image from <a href="https://learn.sparkfun.com/tutorials/hobby-servo-tutorial#servo-motor-background">Sparkfun</a></p>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-servos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2
+</figcaption>
+</figure>
+</div>
+<p>The control signal for hobby servos is a sort of PWM signal, where the width of the pulse determines the desired position of the servo. The pulse is typically 1-2 ms long, and repeats every 20 ms. The servo’s internal electronics use this signal to adjust the motor’s position to match the desired position.</p>
+<p><img src="images/Servo_Diagram.svg" class="img-fluid"></p>
+<div class="cite">
+<p><a href="https://commons.wikimedia.org/wiki/File:Servo_Diagram.svg">Stefan Tauner</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, via Wikimedia Commons</p>
+</div>
+</section>
+</section>
+</section>
+<section id="wiring-1" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Wiring</h1>
+<p><img src="images/servo_wiring.png" class="img-fluid" style="width:100.0%"></p>
+</section>
+<section id="code-1" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Code</h1>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1"></a>
+</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="pp">#include </span><span class="im">&lt;Servo.h&gt;</span><span class="pp">
+</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>
+</span>
+<span id="cb2-4"><a href="#cb2-4"></a>Servo servo_A2<span class="op">;</span>
+</span>
+<span id="cb2-5"><a href="#cb2-5"></a>
+</span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="dt">int</span> pinTrigger <span class="op">=</span> A1<span class="op">;</span>
+</span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="dt">int</span> pinEcho <span class="op">=</span> A0<span class="op">;</span>
+</span>
+<span id="cb2-8"><a href="#cb2-8"></a>
+</span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="dt">float</span> Left_Distance <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>
+</span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="dt">float</span> Right_Distance <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>
+</span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="dt">float</span> Front_Distance <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>
+</span>
+<span id="cb2-12"><a href="#cb2-12"></a>
+</span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="co">// Pin definitions for motor control
+</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="dt">int</span> pinRightN <span class="op">=</span> <span class="dv">2</span><span class="op">;</span>
+</span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="dt">int</span> pinRightP <span class="op">=</span> <span class="dv">4</span><span class="op">;</span>
+</span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="dt">int</span> pinLeftN <span class="op">=</span> <span class="dv">7</span><span class="op">;</span>
+</span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="dt">int</span> pinLeftP <span class="op">=</span> <span class="dv">8</span><span class="op">;</span>
+</span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="dt">int</span> pinRightSpeed <span class="op">=</span> <span class="dv">5</span><span class="op">;</span>
+</span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="dt">int</span> pinLeftSpeed <span class="op">=</span> <span class="dv">6</span><span class="op">;</span>
+</span>
+<span id="cb2-20"><a href="#cb2-20"></a>
+</span>
+<span id="cb2-21"><a href="#cb2-21"></a>
+</span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="dt">void</span> driveForward<span class="op">(</span><span class="dt">int</span> car_speed<span class="op">)</span>
+</span>
+<span id="cb2-23"><a href="#cb2-23"></a><span class="op">{</span>
+</span>
+<span id="cb2-24"><a href="#cb2-24"></a>  digitalWrite<span class="op">(</span>pinRightN<span class="op">,</span> LOW<span class="op">);</span>
+</span>
+<span id="cb2-25"><a href="#cb2-25"></a>  digitalWrite<span class="op">(</span>pinRightP<span class="op">,</span> HIGH<span class="op">);</span>
+</span>
+<span id="cb2-26"><a href="#cb2-26"></a>  digitalWrite<span class="op">(</span>pinLeftN<span class="op">,</span> LOW<span class="op">);</span>
+</span>
+<span id="cb2-27"><a href="#cb2-27"></a>  digitalWrite<span class="op">(</span>pinLeftP<span class="op">,</span> HIGH<span class="op">);</span>
+</span>
+<span id="cb2-28"><a href="#cb2-28"></a>  analogWrite<span class="op">(</span>pinRightSpeed<span class="op">,</span> car_speed<span class="op">);</span>
+</span>
+<span id="cb2-29"><a href="#cb2-29"></a>  analogWrite<span class="op">(</span>pinLeftSpeed<span class="op">,</span> car_speed<span class="op">);</span>
+</span>
+<span id="cb2-30"><a href="#cb2-30"></a><span class="op">}</span>
+</span>
+<span id="cb2-31"><a href="#cb2-31"></a>
+</span>
+<span id="cb2-32"><a href="#cb2-32"></a><span class="dt">void</span> driveBackward<span class="op">(</span><span class="dt">int</span> car_speed<span class="op">)</span>
+</span>
+<span id="cb2-33"><a href="#cb2-33"></a><span class="op">{</span>
+</span>
+<span id="cb2-34"><a href="#cb2-34"></a>  digitalWrite<span class="op">(</span>pinRightN<span class="op">,</span> HIGH<span class="op">);</span>
+</span>
+<span id="cb2-35"><a href="#cb2-35"></a>  digitalWrite<span class="op">(</span>pinRightP<span class="op">,</span> LOW<span class="op">);</span>
+</span>
+<span id="cb2-36"><a href="#cb2-36"></a>  digitalWrite<span class="op">(</span>pinLeftN<span class="op">,</span> HIGH<span class="op">);</span>
+</span>
+<span id="cb2-37"><a href="#cb2-37"></a>  digitalWrite<span class="op">(</span>pinLeftP<span class="op">,</span> LOW<span class="op">);</span>
+</span>
+<span id="cb2-38"><a href="#cb2-38"></a>  analogWrite<span class="op">(</span>pinRightSpeed<span class="op">,</span> car_speed<span class="op">);</span>
+</span>
+<span id="cb2-39"><a href="#cb2-39"></a>  analogWrite<span class="op">(</span>pinLeftSpeed<span class="op">,</span> car_speed<span class="op">);</span>
+</span>
+<span id="cb2-40"><a href="#cb2-40"></a><span class="op">}</span>
+</span>
+<span id="cb2-41"><a href="#cb2-41"></a>
+</span>
+<span id="cb2-42"><a href="#cb2-42"></a><span class="dt">void</span> driveLeft<span class="op">(</span><span class="dt">int</span> car_speed<span class="op">)</span>
+</span>
+<span id="cb2-43"><a href="#cb2-43"></a><span class="op">{</span>
+</span>
+<span id="cb2-44"><a href="#cb2-44"></a>  digitalWrite<span class="op">(</span>pinRightN<span class="op">,</span> LOW<span class="op">);</span>
+</span>
+<span id="cb2-45"><a href="#cb2-45"></a>  digitalWrite<span class="op">(</span>pinRightP<span class="op">,</span> HIGH<span class="op">);</span>
+</span>
+<span id="cb2-46"><a href="#cb2-46"></a>  digitalWrite<span class="op">(</span>pinLeftN<span class="op">,</span> HIGH<span class="op">);</span>
+</span>
+<span id="cb2-47"><a href="#cb2-47"></a>  digitalWrite<span class="op">(</span>pinLeftP<span class="op">,</span> LOW<span class="op">);</span>
+</span>
+<span id="cb2-48"><a href="#cb2-48"></a>  analogWrite<span class="op">(</span>pinRightSpeed<span class="op">,</span> car_speed<span class="op">);</span>
+</span>
+<span id="cb2-49"><a href="#cb2-49"></a>  analogWrite<span class="op">(</span>pinLeftSpeed<span class="op">,</span> car_speed<span class="op">);</span>
+</span>
+<span id="cb2-50"><a href="#cb2-50"></a><span class="op">}</span>
+</span>
+<span id="cb2-51"><a href="#cb2-51"></a>
+</span>
+<span id="cb2-52"><a href="#cb2-52"></a><span class="dt">void</span> driveRight<span class="op">(</span><span class="dt">int</span> car_speed<span class="op">)</span>
+</span>
+<span id="cb2-53"><a href="#cb2-53"></a><span class="op">{</span>
+</span>
+<span id="cb2-54"><a href="#cb2-54"></a>  digitalWrite<span class="op">(</span>pinRightN<span class="op">,</span> HIGH<span class="op">);</span>
+</span>
+<span id="cb2-55"><a href="#cb2-55"></a>  digitalWrite<span class="op">(</span>pinRightP<span class="op">,</span> LOW<span class="op">);</span>
+</span>
+<span id="cb2-56"><a href="#cb2-56"></a>  digitalWrite<span class="op">(</span>pinLeftN<span class="op">,</span> LOW<span class="op">);</span>
+</span>
+<span id="cb2-57"><a href="#cb2-57"></a>  digitalWrite<span class="op">(</span>pinLeftP<span class="op">,</span> HIGH<span class="op">);</span>
+</span>
+<span id="cb2-58"><a href="#cb2-58"></a>  analogWrite<span class="op">(</span>pinRightSpeed<span class="op">,</span> car_speed<span class="op">);</span>
+</span>
+<span id="cb2-59"><a href="#cb2-59"></a>  analogWrite<span class="op">(</span>pinLeftSpeed<span class="op">,</span> car_speed<span class="op">);</span>
+</span>
+<span id="cb2-60"><a href="#cb2-60"></a><span class="op">}</span>
+</span>
+<span id="cb2-61"><a href="#cb2-61"></a>
+</span>
+<span id="cb2-62"><a href="#cb2-62"></a><span class="dt">void</span> STOP<span class="op">()</span>
+</span>
+<span id="cb2-63"><a href="#cb2-63"></a><span class="op">{</span>
+</span>
+<span id="cb2-64"><a href="#cb2-64"></a>  digitalWrite<span class="op">(</span>pinRightN<span class="op">,</span> HIGH<span class="op">);</span>
+</span>
+<span id="cb2-65"><a href="#cb2-65"></a>  digitalWrite<span class="op">(</span>pinRightP<span class="op">,</span> HIGH<span class="op">);</span>
+</span>
+<span id="cb2-66"><a href="#cb2-66"></a>  digitalWrite<span class="op">(</span>pinLeftN<span class="op">,</span> HIGH<span class="op">);</span>
+</span>
+<span id="cb2-67"><a href="#cb2-67"></a>  digitalWrite<span class="op">(</span>pinLeftP<span class="op">,</span> HIGH<span class="op">);</span>
+</span>
+<span id="cb2-68"><a href="#cb2-68"></a>  analogWrite<span class="op">(</span>pinRightSpeed<span class="op">,</span> <span class="dv">0</span><span class="op">);</span>
+</span>
+<span id="cb2-69"><a href="#cb2-69"></a>  analogWrite<span class="op">(</span>pinLeftSpeed<span class="op">,</span> <span class="dv">0</span><span class="op">);</span>
+</span>
+<span id="cb2-70"><a href="#cb2-70"></a><span class="op">}</span>
+</span>
+<span id="cb2-71"><a href="#cb2-71"></a>
+</span>
+<span id="cb2-72"><a href="#cb2-72"></a><span class="dt">float</span> checkDistance<span class="op">()</span>
+</span>
+<span id="cb2-73"><a href="#cb2-73"></a><span class="op">{</span>
+</span>
+<span id="cb2-74"><a href="#cb2-74"></a>  digitalWrite<span class="op">(</span>pinTrigger<span class="op">,</span> LOW<span class="op">);</span>
+</span>
+<span id="cb2-75"><a href="#cb2-75"></a>  delayMicroseconds<span class="op">(</span><span class="dv">2</span><span class="op">);</span>
+</span>
+<span id="cb2-76"><a href="#cb2-76"></a>  digitalWrite<span class="op">(</span>pinTrigger<span class="op">,</span> HIGH<span class="op">);</span>
+</span>
+<span id="cb2-77"><a href="#cb2-77"></a>  delayMicroseconds<span class="op">(</span><span class="dv">10</span><span class="op">);</span>
+</span>
+<span id="cb2-78"><a href="#cb2-78"></a>  digitalWrite<span class="op">(</span>pinTrigger<span class="op">,</span> LOW<span class="op">);</span>
+</span>
+<span id="cb2-79"><a href="#cb2-79"></a>  <span class="dt">float</span> distance <span class="op">=</span> pulseIn<span class="op">(</span>pinEcho<span class="op">,</span> HIGH<span class="op">)</span> <span class="op">/</span> <span class="fl">58.00</span><span class="op">;</span>
+</span>
+<span id="cb2-80"><a href="#cb2-80"></a>  delay<span class="op">(</span><span class="dv">10</span><span class="op">);</span>
+</span>
+<span id="cb2-81"><a href="#cb2-81"></a>  <span class="cf">return</span> distance<span class="op">;</span>
+</span>
+<span id="cb2-82"><a href="#cb2-82"></a><span class="op">}</span>
+</span>
+<span id="cb2-83"><a href="#cb2-83"></a>
+</span>
+<span id="cb2-84"><a href="#cb2-84"></a><span class="dt">void</span> setup<span class="op">()</span>
+</span>
+<span id="cb2-85"><a href="#cb2-85"></a><span class="op">{</span>
+</span>
+<span id="cb2-86"><a href="#cb2-86"></a>  pinMode<span class="op">(</span>pinRightN<span class="op">,</span> OUTPUT<span class="op">);</span>
+</span>
+<span id="cb2-87"><a href="#cb2-87"></a>  pinMode<span class="op">(</span>pinRightP<span class="op">,</span> OUTPUT<span class="op">);</span>
+</span>
+<span id="cb2-88"><a href="#cb2-88"></a>  pinMode<span class="op">(</span>pinLeftN<span class="op">,</span> OUTPUT<span class="op">);</span>
+</span>
+<span id="cb2-89"><a href="#cb2-89"></a>  pinMode<span class="op">(</span>pinLeftP<span class="op">,</span> OUTPUT<span class="op">);</span>
+</span>
+<span id="cb2-90"><a href="#cb2-90"></a>  pinMode<span class="op">(</span>pinTrigger<span class="op">,</span> OUTPUT<span class="op">);</span>
+</span>
+<span id="cb2-91"><a href="#cb2-91"></a>  pinMode<span class="op">(</span>pinEcho<span class="op">,</span> INPUT<span class="op">);</span>
+</span>
+<span id="cb2-92"><a href="#cb2-92"></a>
+</span>
+<span id="cb2-93"><a href="#cb2-93"></a>  servo_A2<span class="op">.</span>attach<span class="op">(</span>A2<span class="op">);</span>
+</span>
+<span id="cb2-94"><a href="#cb2-94"></a><span class="op">}</span>
+</span>
+<span id="cb2-95"><a href="#cb2-95"></a>
+</span>
+<span id="cb2-96"><a href="#cb2-96"></a><span class="dt">void</span> loop<span class="op">()</span>
+</span>
+<span id="cb2-97"><a href="#cb2-97"></a><span class="op">{</span>
+</span>
+<span id="cb2-98"><a href="#cb2-98"></a>  <span class="co">// Check for obstacles in front
+</span></span>
+<span id="cb2-99"><a href="#cb2-99"></a>  servo_A2<span class="op">.</span>write<span class="op">(</span><span class="dv">90</span><span class="op">);</span>
+</span>
+<span id="cb2-100"><a href="#cb2-100"></a>  <span class="dt">float</span> Front_Distance <span class="op">=</span> checkDistance<span class="op">();</span>
+</span>
+<span id="cb2-101"><a href="#cb2-101"></a>
+</span>
+<span id="cb2-102"><a href="#cb2-102"></a>  <span class="cf">if</span> <span class="op">(</span><span class="dv">0</span> <span class="op">&lt;</span> Front_Distance <span class="op">&amp;&amp;</span> Front_Distance <span class="op">&lt;=</span> <span class="dv">20</span><span class="op">)</span>
+</span>
+<span id="cb2-103"><a href="#cb2-103"></a>  <span class="op">{</span>
+</span>
+<span id="cb2-104"><a href="#cb2-104"></a>    <span class="co">// Obstacle detected in front, stop the car
+</span></span>
+<span id="cb2-105"><a href="#cb2-105"></a>    STOP<span class="op">();</span>
+</span>
+<span id="cb2-106"><a href="#cb2-106"></a>    delay<span class="op">(</span><span class="dv">100</span><span class="op">);</span>
+</span>
+<span id="cb2-107"><a href="#cb2-107"></a>
+</span>
+<span id="cb2-108"><a href="#cb2-108"></a>    <span class="co">// Look left and measure nearest distance...
+</span></span>
+<span id="cb2-109"><a href="#cb2-109"></a>    servo_A2<span class="op">.</span>write<span class="op">(</span><span class="dv">180</span><span class="op">);</span>
+</span>
+<span id="cb2-110"><a href="#cb2-110"></a>    delay<span class="op">(</span><span class="dv">500</span><span class="op">);</span>
+</span>
+<span id="cb2-111"><a href="#cb2-111"></a>    Left_Distance <span class="op">=</span> checkDistance<span class="op">();</span>
+</span>
+<span id="cb2-112"><a href="#cb2-112"></a>    delay<span class="op">(</span><span class="dv">100</span><span class="op">);</span>
+</span>
+<span id="cb2-113"><a href="#cb2-113"></a>
+</span>
+<span id="cb2-114"><a href="#cb2-114"></a>    <span class="co">// Look right and measure nearest distance...
+</span></span>
+<span id="cb2-115"><a href="#cb2-115"></a>    servo_A2<span class="op">.</span>write<span class="op">(</span><span class="dv">0</span><span class="op">);</span>
+</span>
+<span id="cb2-116"><a href="#cb2-116"></a>    delay<span class="op">(</span><span class="dv">500</span><span class="op">);</span>
+</span>
+<span id="cb2-117"><a href="#cb2-117"></a>    Right_Distance <span class="op">=</span> checkDistance<span class="op">();</span>
+</span>
+<span id="cb2-118"><a href="#cb2-118"></a>    delay<span class="op">(</span><span class="dv">100</span><span class="op">);</span>
+</span>
+<span id="cb2-119"><a href="#cb2-119"></a>
+</span>
+<span id="cb2-120"><a href="#cb2-120"></a>    <span class="co">// Compare distances and turn accordingly
+</span></span>
+<span id="cb2-121"><a href="#cb2-121"></a>    <span class="cf">if</span> <span class="op">(</span>Right_Distance <span class="op">&lt;=</span> Left_Distance<span class="op">)</span>
+</span>
+<span id="cb2-122"><a href="#cb2-122"></a>    <span class="op">{</span>
+</span>
+<span id="cb2-123"><a href="#cb2-123"></a>      driveLeft<span class="op">(</span><span class="dv">255</span><span class="op">);</span>
+</span>
+<span id="cb2-124"><a href="#cb2-124"></a>      delay<span class="op">(</span><span class="dv">300</span><span class="op">);</span>
+</span>
+<span id="cb2-125"><a href="#cb2-125"></a>    <span class="op">}</span>
+</span>
+<span id="cb2-126"><a href="#cb2-126"></a>    else
+</span>
+<span id="cb2-127"><a href="#cb2-127"></a>    <span class="op">{</span>
+</span>
+<span id="cb2-128"><a href="#cb2-128"></a>      driveRight<span class="op">(</span><span class="dv">255</span><span class="op">);</span>
+</span>
+<span id="cb2-129"><a href="#cb2-129"></a>      delay<span class="op">(</span><span class="dv">300</span><span class="op">);</span>
+</span>
+<span id="cb2-130"><a href="#cb2-130"></a>    <span class="op">}</span>
+</span>
+<span id="cb2-131"><a href="#cb2-131"></a>  <span class="op">}</span>
+</span>
+<span id="cb2-132"><a href="#cb2-132"></a>  else
+</span>
+<span id="cb2-133"><a href="#cb2-133"></a>  <span class="op">{</span>
+</span>
+<span id="cb2-134"><a href="#cb2-134"></a>    driveForward<span class="op">(</span><span class="dv">150</span><span class="op">);</span>
+</span>
+<span id="cb2-135"><a href="#cb2-135"></a>  <span class="op">}</span>
+</span>
+<span id="cb2-136"><a href="#cb2-136"></a><span class="op">}</span>
+</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="modifications" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Modifications</h1>
+<section id="check-more-directions" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="check-more-directions"><span class="header-section-number">5.1</span> Check more directions</h2>
+<p>Right now, the car only checks the front, left, and right directions for obstacles. Maybe you want to sweep the ultrasonic sensor and see what angle gives the clearest path?</p>
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/cbcGirard\.github\.io\/SEA-Arduino\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

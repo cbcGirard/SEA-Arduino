@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Dr.&nbsp;CBC Girard">
+
+<title>Intro to Arduino – SEA-Arduino</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-20051e017c6b19db8f2a6796cc96be8a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/iconify-icon-2.1.0/iconify-icon.min.js" type="module"></script>
+<script src="site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
+<script src="site_libs/quarto-contrib/iconify-2.1.0/iconify-pseudolist.js"></script>
+<link href="site_libs/quarto-contrib/iconify-2.1.0/watermark.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/custom-callouts-0.0.0/custom-callouts.scss" rel="stylesheet" type="text/css">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">SEA-Arduino</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./intro.html" aria-current="page"> 
+<span class="menu-text">Intro</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./lines.html"> 
+<span class="menu-text">Line following</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./ultrasonic.html"> 
+<span class="menu-text">Obstacle avoidance</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./final.html"> 
+<span class="menu-text">Finale</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">1</span> Background</a>
+  <ul class="collapse">
+  <li><a href="#arduino" id="toc-arduino" class="nav-link" data-scroll-target="#arduino"><span class="header-section-number">1.0.1</span> <iconify-icon inline="" icon="simple-icons:arduino"></iconify-icon>Arduino</a></li>
+  <li><a href="#variables" id="toc-variables" class="nav-link" data-scroll-target="#variables"><span class="header-section-number">1.0.2</span> <iconify-icon inline="" icon="mdi:variable"></iconify-icon>Variables</a></li>
+  <li><a href="#structure-of-an-arduino-sketch" id="toc-structure-of-an-arduino-sketch" class="nav-link" data-scroll-target="#structure-of-an-arduino-sketch"><span class="header-section-number">1.1</span> Structure of an Arduino sketch</a></li>
+  <li><a href="#hardware" id="toc-hardware" class="nav-link" data-scroll-target="#hardware"><span class="header-section-number">1.2</span> Hardware</a></li>
+  </ul></li>
+  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code"><span class="header-section-number">2</span> Code</a></li>
+  <li><a href="#modifications" id="toc-modifications" class="nav-link" data-scroll-target="#modifications"><span class="header-section-number">3</span> Modifications</a>
+  <ul class="collapse">
+  <li><a href="#create-your-own-functions" id="toc-create-your-own-functions" class="nav-link" data-scroll-target="#create-your-own-functions"><span class="header-section-number">3.1</span> Create your own functions</a></li>
+  <li><a href="#tweak-your-variables" id="toc-tweak-your-variables" class="nav-link" data-scroll-target="#tweak-your-variables"><span class="header-section-number">3.2</span> Tweak your variables</a></li>
+  <li><a href="#control-motor-speed" id="toc-control-motor-speed" class="nav-link" data-scroll-target="#control-motor-speed"><span class="header-section-number">3.3</span> Control motor speed</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Intro to Arduino</h1>
+<p class="subtitle lead">Hello car!</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p><a href="https://cbcgirard.github.io">Dr.&nbsp;CBC Girard</a> <a href="mailto:cgirard@chapman.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-objective no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<iconify-icon inline="" icon="clarity:bullseye-line" font-size="1.5em"></iconify-icon>&nbsp;Objective:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="callout-objective">
+<ul>
+<li>Learn the basics of Arduino programming</li>
+<li>Learn how to control motors with an Arduino</li>
+<li>Build a simple car that can drive forward, backward, and turn</li>
+</ul>
+</div>
+</div>
+</div>
+<section id="background" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Background</h1>
+<section id="arduino" class="level3" data-ico="simple-icons:arduino" data-number="1.0.1">
+<h3 data-ico="simple-icons:arduino" data-number="1.0.1" class="anchored" data-anchor-id="arduino"><span class="header-section-number">1.0.1</span> <iconify-icon inline="" icon="simple-icons:arduino"></iconify-icon>Arduino</h3>
+<p>The Arduino is an open-source electronics platform based on easy-to-use hardware and software.</p>
+<p>An Arduino board is the <em>hardware</em> component of the Arduino platform. Each is based around a particular microcontroller, a tiny self-contained computer. If you need to read sensors, control motors, otherwise interact with the physical world, a microcontroller is the way to go: unlike a full computer, a microcontroller is dedicated to running just one program, day in and day out.</p>
+<p>The Arduino <em>software</em>, the IDE, contains everything you need to write your own code and upload it to the board. Because the Arduino project is open-source, over the years numerous people (and companies) have created their own versions of the Arduino board, with different features and capabilities. Because they share this common interface, you can usually upload the <em>same code</em> with the <em>same IDE</em> to <em>any</em> Arduino-compatible board.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can find complete documentation for the Arduino platform at <a href="https://www.arduino.cc/reference/en/" class="uri">https://www.arduino.cc/reference/en/</a>. The IDE itself is available for download at <a href="https://www.arduino.cc/en/software" class="uri">https://www.arduino.cc/en/software</a>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Arduino code is C++, though it mostly sticks with the simpler parts of the language that it shares with C. A professional working with a microcontroller will likely use <em>the very same language</em> in their project; Arduino makes the language more accessible for learners by handling some of the more complex tasks automatically, and wrapping others into a much more intuitive set of commands.</p>
+</div>
+</div>
+</section>
+<section id="variables" class="level3" data-ico="mdi:variable" data-number="1.0.2">
+<h3 data-ico="mdi:variable" data-number="1.0.2" class="anchored" data-anchor-id="variables"><span class="header-section-number">1.0.2</span> <iconify-icon inline="" icon="mdi:variable"></iconify-icon>Variables</h3>
+<p>A variable is a named storage location in a program that holds a value. In C/C++, you must declare a variable before you can use it, specifying its type (like <code>int</code>, <code>float</code>, or <code>char</code>) and a name. You can then assign a value to the variable using the assignment operator <code>=</code>.</p>
+<p>For example, the following code declares an integer variable <code>x</code> and assigns it the value <code>5</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1"></a><span class="dt">int</span> x<span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>x <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can combine the two steps in a single line, if you wish: <span class="cpp"><code>int x = 5;</code></span></p>
+<p>Think of the assignment operator like an arrow pointing left: <code>label &lt;- value</code>, because the destination (variable) always comes first, then the value you want to assign to it.</p>
+<p>Variables can be used to store a wide range of values, from numbers to text to more complex data structures. They can also be used to store the result of calculations, making it easy to reuse the value later in the program.</p>
+</section>
+<section id="structure-of-an-arduino-sketch" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="structure-of-an-arduino-sketch"><span class="header-section-number">1.1</span> Structure of an Arduino sketch</h2>
+</section>
+<section id="hardware" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="hardware"><span class="header-section-number">1.2</span> <a href="https://chapman0-my.sharepoint.com/:p:/g/personal/cgirard_chapman_edu/EQcMNmNuMEJOn5DRQ_-mrjEBhao07SD8RUOTy2kzXDoqEA?e=5p3r90&amp;nav=eyJzSWQiOjM4MSwiY0lkIjo5ODUyNjcxNjN9">Hardware</a></h2>
+<p>Though the Arduino’s <code>digitalWrite</code> lets you set a pin to either 5V (HIGH) or 0V (LOW), the amount of <em>power</em> that the Arduino can provide is very limited. Thus, we need another component that listens to the Arduino and switches power to the motors on and off. This is called a <em>motor driver</em>.</p>
+<p>The L298N fills that role in your kit. A HIGH signal on one of the input pins will connect the corresponding output pin to the power input; a LOW signal will connect it to ground instead. The power input can supply much more current than the Arduino, and at higher voltages, so the small signal from the Arduino can control the larger power supply to the motors.</p>
+<div>
+<p><img src="https://lastminuteengineers.com/wp-content/uploads/arduino/L298N-Motor-Driver-Module-Pinout.png" class="img-fluid" style="width:75.0%"></p>
+<div class="cite">
+<p><a href="https://lastminuteengineers.com/l298n-dc-stepper-driver-arduino-tutorial/">Last Minute Engineers</a></p>
+</div>
+</div>
+<p>Because the L298N has four input/output pairs, you can control two motors independently. This lets you go straight, turn left or right, and even go backward. The table below shows how to set the inputs to control the motors:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Direction</th>
+<th style="text-align: center;">IN1 (D2)</th>
+<th style="text-align: center;">IN2 (D4)</th>
+<th style="text-align: center;">IN3 (D7)</th>
+<th style="text-align: center;">IN4 (D8)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Forward</td>
+<td style="text-align: center;">LOW</td>
+<td style="text-align: center;">HIGH</td>
+<td style="text-align: center;">LOW</td>
+<td style="text-align: center;">HIGH</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Backward</td>
+<td style="text-align: center;">HIGH</td>
+<td style="text-align: center;">LOW</td>
+<td style="text-align: center;">HIGH</td>
+<td style="text-align: center;">LOW</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Left</td>
+<td style="text-align: center;">LOW</td>
+<td style="text-align: center;">HIGH</td>
+<td style="text-align: center;">HIGH</td>
+<td style="text-align: center;">LOW</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Right</td>
+<td style="text-align: center;">HIGH</td>
+<td style="text-align: center;">LOW</td>
+<td style="text-align: center;">LOW</td>
+<td style="text-align: center;">HIGH</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Stop</td>
+<td style="text-align: center;">LOW</td>
+<td style="text-align: center;">LOW</td>
+<td style="text-align: center;">LOW</td>
+<td style="text-align: center;">LOW</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="code" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Code</h1>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">/*</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co">Intro: hello car</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co">Purpose:</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">Illustrate the basics of Arduino by driving the car in a sorta-circle.</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co">*/</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="dt">int</span> turnTime <span class="op">=</span> <span class="dv">500</span><span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="dt">int</span> straightTime <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="dt">int</span> pinRightN <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="dt">int</span> pinRightP <span class="op">=</span> <span class="dv">4</span><span class="op">;</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="dt">int</span> pinLeftN <span class="op">=</span> <span class="dv">7</span><span class="op">;</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="dt">int</span> pinLeftP <span class="op">=</span> <span class="dv">8</span><span class="op">;</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="dt">int</span> pinRightSpeed <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="dt">int</span> pinLeftSpeed <span class="op">=</span> <span class="dv">6</span><span class="op">;</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a></span>
+<span id="cb2-20"><a href="#cb2-20"></a></span>
+<span id="cb2-21"><a href="#cb2-21"></a></span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="dt">void</span> setup<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-23"><a href="#cb2-23"></a>    pinMode<span class="op">(</span>pinRightN<span class="op">,</span> OUTPUT<span class="op">);</span></span>
+<span id="cb2-24"><a href="#cb2-24"></a>    pinMode<span class="op">(</span>pinRightP<span class="op">,</span> OUTPUT<span class="op">);</span></span>
+<span id="cb2-25"><a href="#cb2-25"></a>    pinMode<span class="op">(</span>pinLeftN<span class="op">,</span> OUTPUT<span class="op">);</span></span>
+<span id="cb2-26"><a href="#cb2-26"></a>    pinMode<span class="op">(</span>pinLeftP<span class="op">,</span> OUTPUT<span class="op">);</span></span>
+<span id="cb2-27"><a href="#cb2-27"></a></span>
+<span id="cb2-28"><a href="#cb2-28"></a>    pinMode<span class="op">(</span>pinRightSpeed<span class="op">,</span>OUTPUT<span class="op">);</span></span>
+<span id="cb2-29"><a href="#cb2-29"></a>    pinMode<span class="op">(</span>pinLeftSpeed<span class="op">,</span>OUTPUT<span class="op">);</span></span>
+<span id="cb2-30"><a href="#cb2-30"></a>    digitalWrite<span class="op">(</span>pinRightSpeed<span class="op">,</span> HIGH<span class="op">);</span></span>
+<span id="cb2-31"><a href="#cb2-31"></a>    digitalWrite<span class="op">(</span>pinLeftSpeed<span class="op">,</span> HIGH<span class="op">);</span> </span>
+<span id="cb2-32"><a href="#cb2-32"></a><span class="op">}</span></span>
+<span id="cb2-33"><a href="#cb2-33"></a></span>
+<span id="cb2-34"><a href="#cb2-34"></a><span class="dt">void</span> loop<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-35"><a href="#cb2-35"></a>    <span class="co">// drive forward 1 second</span></span>
+<span id="cb2-36"><a href="#cb2-36"></a>    digitalWrite<span class="op">(</span>pinRightN<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb2-37"><a href="#cb2-37"></a>    digitalWrite<span class="op">(</span>pinRightP<span class="op">,</span> HIGH<span class="op">);</span></span>
+<span id="cb2-38"><a href="#cb2-38"></a>    digitalWrite<span class="op">(</span>pinLeftN<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb2-39"><a href="#cb2-39"></a>    digitalWrite<span class="op">(</span>pinLeftP<span class="op">,</span> HIGH<span class="op">);</span></span>
+<span id="cb2-40"><a href="#cb2-40"></a>    delay<span class="op">(</span>straightTime<span class="op">);</span></span>
+<span id="cb2-41"><a href="#cb2-41"></a></span>
+<span id="cb2-42"><a href="#cb2-42"></a>    <span class="co">//turn right for 1/2 second</span></span>
+<span id="cb2-43"><a href="#cb2-43"></a>    digitalWrite<span class="op">(</span>pinRightN<span class="op">,</span> HIGH<span class="op">);</span></span>
+<span id="cb2-44"><a href="#cb2-44"></a>    digitalWrite<span class="op">(</span>pinRightP<span class="op">,</span>LOW<span class="op">);</span></span>
+<span id="cb2-45"><a href="#cb2-45"></a>    digitalWrite<span class="op">(</span>pinLeftN<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb2-46"><a href="#cb2-46"></a>    digitalWrite<span class="op">(</span>pinLeftP<span class="op">,</span> HIGH<span class="op">);</span></span>
+<span id="cb2-47"><a href="#cb2-47"></a>    delay<span class="op">(</span>turnTime<span class="op">);</span></span>
+<span id="cb2-48"><a href="#cb2-48"></a></span>
+<span id="cb2-49"><a href="#cb2-49"></a>    <span class="co">//Stop moving for a second</span></span>
+<span id="cb2-50"><a href="#cb2-50"></a>    digitalWrite<span class="op">(</span>pinRightN<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb2-51"><a href="#cb2-51"></a>    digitalWrite<span class="op">(</span>pinRightP<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb2-52"><a href="#cb2-52"></a>    digitalWrite<span class="op">(</span>pinLeftN<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb2-53"><a href="#cb2-53"></a>    digitalWrite<span class="op">(</span>pinLeftP<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb2-54"><a href="#cb2-54"></a>    delay<span class="op">(</span><span class="dv">1000</span><span class="op">);</span></span>
+<span id="cb2-55"><a href="#cb2-55"></a></span>
+<span id="cb2-56"><a href="#cb2-56"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="modifications" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Modifications</h1>
+<section id="create-your-own-functions" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="create-your-own-functions"><span class="header-section-number">3.1</span> Create your own functions</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1"></a><span class="dt">void</span> functionName<span class="op">(</span><span class="dt">int</span> functionParameter<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="co">// function code</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this block:</p>
+<ul>
+<li><code>functionName</code> is the name of the function. You can name it anything you want, but it should be descriptive of what the function does.</li>
+<li><code>void</code> means that the function does not return a value. We will learn about functions that return values later.</li>
+<li><code>functionParameter</code> is the parameter that you pass to the function. You can name it anything you want, but it should be descriptive of what the parameter is. Because we are using <code>int</code>, the parameter must be an integer.</li>
+</ul>
+<div class="callout callout-style-default callout-hint no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<iconify-icon inline="" icon="bi:hand-index-thumb" flip="vertical"></iconify-icon>&nbsp;(hint…)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="callout-hint">
+<p>You might define a function to drive the car forward for a certain amount of time:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1"></a><span class="dt">void</span> driveForward<span class="op">(</span><span class="dt">int</span> driveTime<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>  digitalWrite<span class="op">(</span>pinRightN<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>  digitalWrite<span class="op">(</span>pinRightP<span class="op">,</span> HIGH<span class="op">);</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>  digitalWrite<span class="op">(</span>pinLeftN<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>  digitalWrite<span class="op">(</span>pinLeftP<span class="op">,</span> HIGH<span class="op">);</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>  delay<span class="op">(</span>driveTime<span class="op">);</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then, you can replace lines 35-40 with <code>driveForward(straightTime);</code>. The function will then run, setting <code>driveTime</code> equal to <code>straightTime</code>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="tweak-your-variables" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="tweak-your-variables"><span class="header-section-number">3.2</span> Tweak your variables</h2>
+<p>Though the <code>pin</code> variables need those values for the Arduino to control the motors, there’s nothing magic about the values of <code>straightTime</code>, <code>turnTime</code>, and the delay in line 34. Play around with them to see how they affect the car’s behavior. Can you make the car follow a square path? A triangle? A circle?</p>
+</section>
+<section id="control-motor-speed" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="control-motor-speed"><span class="header-section-number">3.3</span> Control motor speed</h2>
+<p>Our original sketch sets the two speed pins to HIGH, which means the motors will run at full speed. What if we could set the pin partway between HIGH and LOW, so the motors run at a slower speed?</p>
+<p>We can, sort of! It’s not possible to set the pin to a voltage between HIGH and LOW, but <em>pulse-width modulation</em> (PWM) has almost the same effect. By switching between HIGH and LOW very quickly, and varying how long the pin is HIGH versus how long it is LOW, we can control the <em>average</em> voltage that the motor receives.</p>
+<div>
+<p><img src="https://lastminuteengineers.com/wp-content/uploads/arduino/Pulse-Width-Modulation-PWM-Technique-with-Duty-Cycles.png" class="img-fluid" style="width:50.0%"></p>
+<div class="cite">
+<p><a href="https://lastminuteengineers.com/l298n-dc-stepper-driver-arduino-tutorial/">Last Minute Engineers</a></p>
+</div>
+</div>
+<p>To use PWM on a pin that supports it, you can use the <code>analogWrite</code> function instead of <code>digitalWrite</code>: instead of LOW or HIGH, we pass a number between 0 and 255. The larger the number, the longer the pin is HIGH in each cycle, and the more power the motor receives.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">// Slowly drive toward the left instead of forward quickly</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>analogWrite<span class="op">(</span>pinRightSpeed<span class="op">,</span> <span class="dv">128</span><span class="op">);</span> <span class="co">// 50% power</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>analogWrite<span class="op">(</span>pinLeftSpeed<span class="op">,</span> <span class="dv">64</span><span class="op">);</span> <span class="co">// 25% power</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/cbcGirard\.github\.io\/SEA-Arduino\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

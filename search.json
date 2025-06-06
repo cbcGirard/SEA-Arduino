@@ -1,0 +1,107 @@
+[
+  {
+    "objectID": "ultrasonic.html",
+    "href": "ultrasonic.html",
+    "title": "Obstacle Avoidance",
+    "section": "",
+    "text": "Objective:\n\n\n\n\n\nLearn how to use an ultrasonic sensor to detect obstacles\nLearn how to use a servo motor to point the sensor in different directions\nCombine the two to build a car that avoids obstacles"
+  },
+  {
+    "objectID": "ultrasonic.html#wiring",
+    "href": "ultrasonic.html#wiring",
+    "title": "Obstacle Avoidance",
+    "section": "1.1 Wiring",
+    "text": "1.1 Wiring"
+  },
+  {
+    "objectID": "ultrasonic.html#code",
+    "href": "ultrasonic.html#code",
+    "title": "Obstacle Avoidance",
+    "section": "1.2 Code",
+    "text": "1.2 Code\n// Pin definitions for the ultrasonic sensor\nint pinTrigger = A1;\nint pinEcho = A0;\n\nfloat checkDistance()\n{\n  digitalWrite(pinTrigger, LOW);\n  delayMicroseconds(2);\n  digitalWrite(pinTrigger, HIGH);\n  delayMicroseconds(10);\n  digitalWrite(pinTrigger, LOW);\n  float distance = pulseIn(pinEcho, HIGH) / 58.00;\n  delay(10);\n  return distance;\n}\n\nvoid setup()\n{\n  Serial.begin(9600);\n\n  pinMode(pinTrigger, OUTPUT);\n  pinMode(pinEcho, INPUT);\n}\n\nvoid loop()\n{\n  // Check for obstacles in front\n  float distance = checkDistance();\n\n    Serial.print(\"Distance: \");\n    Serial.print(distance);\n    Serial.println(\" cm\");\n\n    // Delay for a second so *we* can read the output\n    delay(1000);\n\n}\n\n1.2.1 Running the code\nWhen you first upload the code, you won’t be able to tell it’s running. To see what’s happening, you’ll need open the Serial Monitor in the top-right of the IDE. You should see the distance to the nearest object printed out every second or so. If you hold your hand in front of the sensor, you should see the distance change as you move your hand closer or farther away.\n\n\n\nAccessing the serial monitor\n\n\n\n\n1.2.2 Serial Communication\nUsing the same USB cable you used to program the Arduino, you can transmit data between the computer and Arduino as part of your running program. Frequently, you’ll want to use an Arduino for fast, consistently timed measurements in the real world, but then analyze and display that data on your computer, where you have more processing power and storage.\nThe IDE’s Serial Monitor (top-right of the window) allows you to see the data the Arduino is sending back to the computer, and the Serial Plotter (next to the Serial Monitor) can graph that data in real time. You can also write your own programs to read this data and do more complex analysis and real-time visualization, or even control the Arduino based on the data it sends back.\n\n\n\n\n\n\n Troubleshooting\n\n\n\n\nThe Arduino’s serial port is a UART (Universal Asynchronous Receiver/Transmitter) connection, which means there isn’t a shared clock signal between the Arduino and your computer, and both devices have to agree on how quickly data is transmitted (called the baud rate).\nIf the text in the Serial Monitor is garbled, or you’re not seeing any data at all, you might have the wrong baud rate set. In the code, this will be the number you pass to Serial.begin() in the setup() function, which then configures the Arduino to communicate at that speed; in the Serial Monitor, it will be the number in the bottom-right corner of the window. Make sure these numbers match!"
+  },
+  {
+    "objectID": "ultrasonic.html#background-1",
+    "href": "ultrasonic.html#background-1",
+    "title": "Obstacle Avoidance",
+    "section": "2.1 Background",
+    "text": "2.1 Background\n\n2.1.1 Hobby Servo Motors\nFor small, low-cost applications like radio-controlled toys, hobby servos are a common way of generating precise movements through closed-loop control. Typically, the output shaft is linked to a potentiometer, which allows the motor to sense its position. When the motor is set to a different position, the onboard electronics sense the difference between actual and intended position and drive the internal DC motor until the two match (see Figure 2).\nBecause the servo’s gearing greatly reduces the speed of the motor, the simple DC motor is able to adjust the position of the output shaft with high precision—fractions of a full rotation. This makes hobby servos ideal for applications like steering in radio-controlled cars, or controlling the angle of a robotic arm.\n\n\n\n\n\n\n\n\nVarious hobby servos\n\n\n\n\nImage from Sparkfun\n\n\n\n\n\n\n\nServo internals\n\n\n\n\nImage from Sparkfun\n\n\n\n\nFigure 2\n\n\n\nThe control signal for hobby servos is a sort of PWM signal, where the width of the pulse determines the desired position of the servo. The pulse is typically 1-2 ms long, and repeats every 20 ms. The servo’s internal electronics use this signal to adjust the motor’s position to match the desired position.\n\n\nStefan Tauner, CC BY-SA 3.0, via Wikimedia Commons"
+  },
+  {
+    "objectID": "ultrasonic.html#check-more-directions",
+    "href": "ultrasonic.html#check-more-directions",
+    "title": "Obstacle Avoidance",
+    "section": "5.1 Check more directions",
+    "text": "5.1 Check more directions\nRight now, the car only checks the front, left, and right directions for obstacles. Maybe you want to sweep the ultrasonic sensor and see what angle gives the clearest path?"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Summer Engineering Academy",
+    "section": "",
+    "text": "Welcome to the Summer Engineering Academy! This year, we will be working with Arduino to build a smart car.\n\n1 Resources\n\nSlides\nArduino IDE\nArduino Reference\nKit files\n\n\n\n2 Lessons\n\nIntro to Arduino\nLine following car\nUltrasonic sensor\nFinale\n\n\n\n\n\nReuseCC BY-SA 4.0"
+  },
+  {
+    "objectID": "lines.html",
+    "href": "lines.html",
+    "title": "Line following car",
+    "section": "",
+    "text": "Objective:\n\n\n\n\n\nLearn how to use infrared sensors to detect lines\nBuild a simple line following car that can follow a line on the ground\n\n\n\n\n\n1 Background\n\n1.0.1 Line Following Car\nA line following car is a simple robot that can follow a line on the ground. It uses sensors to detect the line and adjust its direction accordingly. The most common sensors for this purpose are infrared (IR) sensors, which can detect the difference in reflectivity between the line and the surrounding surface.\n\n\n\n\n\n\n\n\nIR sensor in action\n\n\n\n\n\n\nFigure 1\n\n\n\nWhen the sensor is over a light-colored or reflective surface, the IR light reflects back to the sensor, causing it to output a low signal (0). When the sensor is over a dark surface, like our line, the IR light does not reflect back and the sensor returns a high signal (1). By reading the signals from multiple sensors, the car can determine its position relative to the line and adjust its motors accordingly.\n\n\n\nLeft\nCenter\nRight\nAction\n\n\n\n\n0\n0\n0\nStop\n\n\n0\n1\n0\nGo straight\n\n\n1\n0\n0\nTurn right\n\n\n0\n0\n1\nTurn left\n\n\n1\n1\n0\nTurn slight right\n\n\n\n\n\n\n2 Wiring\n\n\n\n3 Code\n\n\nint irLeft;\n\nint irCenter;\n\nint irRight;\n\n\n\nconst int Black = 1;\n\n\n\n\n\nint pinSensorLeft = 9;\n\nint pinSensorCenter = 10;\n\nint pinSensorRight = 11;\n\n\n\nint pinRightN = 2;\n\nint pinRightP = 4;\n\nint pinLeftN = 7;\n\nint pinLeftP = 8;\n\n\n\nvoid driveForward(int car_speed) {\n\n  digitalWrite(pinRightN,LOW);\n\n  digitalWrite(pinRightP,HIGH);\n\n  digitalWrite(pinLeftN,LOW);\n\n  digitalWrite(pinLeftP,HIGH);\n\n  analogWrite(5,car_speed);\n\n  analogWrite(6,car_speed);\n\n}\n\n\n\nvoid driveBackward(int car_speed) {\n\n  digitalWrite(pinRightN,HIGH);\n\n  digitalWrite(pinRightP,LOW);\n\n  digitalWrite(pinLeftN,HIGH);\n\n  digitalWrite(pinLeftP,LOW);\n\n  analogWrite(5,car_speed);\n\n  analogWrite(6,car_speed);\n\n}\n\n\n\nvoid driveLeft(int car_speed) {\n\n  digitalWrite(pinRightN,LOW);\n\n  digitalWrite(pinRightP,HIGH);\n\n  digitalWrite(pinLeftN,HIGH);\n\n  digitalWrite(pinLeftP,LOW);\n\n  analogWrite(5,car_speed);\n\n  analogWrite(6,car_speed);\n\n}\n\n\n\nvoid driveRight(int car_speed) {\n\n  digitalWrite(pinRightN,HIGH);\n\n  digitalWrite(pinRightP,LOW);\n\n  digitalWrite(pinLeftN,LOW);\n\n  digitalWrite(pinLeftP,HIGH);\n\n  analogWrite(5,car_speed);\n\n  analogWrite(6,car_speed);\n\n}\n\n\n\nvoid STOP() {\n\n  digitalWrite(pinRightN,HIGH);\n\n  digitalWrite(pinRightP,HIGH);\n\n  digitalWrite(pinLeftN,HIGH);\n\n  digitalWrite(pinLeftP,HIGH);\n\n  analogWrite(5,0);\n\n  analogWrite(6,0);\n\n}\n\n\n\nvoid setup(){\n\n\n\n  pinMode(pinSensorLeft, INPUT);\n\n  pinMode(pinSensorCenter, INPUT);\n\n  pinMode(pinSensorRight, INPUT);\n\n  pinMode(pinRightN, OUTPUT);\n\n  pinMode(pinRightP, OUTPUT);\n\n  pinMode(pinLeftN, OUTPUT);\n\n  pinMode(pinLeftP, OUTPUT);\n\n\n\n}\n\n\n\nvoid loop(){\n\n    \n\n  irLeft = digitalRead(pinSensorLeft);\n\n  irCenter = digitalRead(pinSensorCenter);\n\n  irRight = digitalRead(pinSensorRight);\n\n\n\n  if (irLeft != Black && (irCenter == Black && irRight != Black)) {\n\n    // _ * _\n\n    driveForward(130);\n\n  } else if (irLeft == Black && (irCenter == Black && irRight != Black)) {\n\n    // * * _\n\n    driveLeft(180);\n\n  } else if (irLeft == Black && (irCenter != Black && irRight != Black)) {\n\n    // * _ _\n\n    driveLeft(160);\n\n  } else if (irLeft != Black && (irCenter != Black && irRight == Black)) {\n\n    // _ _ *\n\n    driveRight(160);\n\n  } else if (irLeft != Black && (irCenter == Black && irRight == Black)) {\n\n    // _ * *\n\n    driveRight(180);\n\n  } else if (irLeft == Black && (irCenter == Black && irRight == Black)) {\n\n    STOP();\n\n  }\n\n\n\n  delay(100);\n\n\n\n}\n\n\n\n4 Modifications\nTo adjust the speed, you might change the values you give to driveRight() and driveLeft(). Similarly, changing the value of delay in line 100 will change how long the car waits before checking the sensors again. What happens if the delay is too short? Too long?\n\n\n\n\nReuseCC BY-SA 4.0"
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "Intro to Arduino",
+    "section": "",
+    "text": "Objective:\n\n\n\n\n\nLearn the basics of Arduino programming\nLearn how to control motors with an Arduino\nBuild a simple car that can drive forward, backward, and turn"
+  },
+  {
+    "objectID": "intro.html#structure-of-an-arduino-sketch",
+    "href": "intro.html#structure-of-an-arduino-sketch",
+    "title": "Intro to Arduino",
+    "section": "1.1 Structure of an Arduino sketch",
+    "text": "1.1 Structure of an Arduino sketch"
+  },
+  {
+    "objectID": "intro.html#hardware",
+    "href": "intro.html#hardware",
+    "title": "Intro to Arduino",
+    "section": "1.2 Hardware",
+    "text": "1.2 Hardware\nThough the Arduino’s digitalWrite lets you set a pin to either 5V (HIGH) or 0V (LOW), the amount of power that the Arduino can provide is very limited. Thus, we need another component that listens to the Arduino and switches power to the motors on and off. This is called a motor driver.\nThe L298N fills that role in your kit. A HIGH signal on one of the input pins will connect the corresponding output pin to the power input; a LOW signal will connect it to ground instead. The power input can supply much more current than the Arduino, and at higher voltages, so the small signal from the Arduino can control the larger power supply to the motors.\n\n\n\nLast Minute Engineers\n\n\nBecause the L298N has four input/output pairs, you can control two motors independently. This lets you go straight, turn left or right, and even go backward. The table below shows how to set the inputs to control the motors:\n\n\n\nDirection\nIN1 (D2)\nIN2 (D4)\nIN3 (D7)\nIN4 (D8)\n\n\n\n\nForward\nLOW\nHIGH\nLOW\nHIGH\n\n\nBackward\nHIGH\nLOW\nHIGH\nLOW\n\n\nLeft\nLOW\nHIGH\nHIGH\nLOW\n\n\nRight\nHIGH\nLOW\nLOW\nHIGH\n\n\nStop\nLOW\nLOW\nLOW\nLOW"
+  },
+  {
+    "objectID": "intro.html#create-your-own-functions",
+    "href": "intro.html#create-your-own-functions",
+    "title": "Intro to Arduino",
+    "section": "3.1 Create your own functions",
+    "text": "3.1 Create your own functions\nvoid functionName(int functionParameter) {\n  // function code\n}\nIn this block:\n\nfunctionName is the name of the function. You can name it anything you want, but it should be descriptive of what the function does.\nvoid means that the function does not return a value. We will learn about functions that return values later.\nfunctionParameter is the parameter that you pass to the function. You can name it anything you want, but it should be descriptive of what the parameter is. Because we are using int, the parameter must be an integer.\n\n\n\n\n\n\n\n (hint…)\n\n\n\n\n\n\nYou might define a function to drive the car forward for a certain amount of time:\nvoid driveForward(int driveTime) {\n  digitalWrite(pinRightN, LOW);\n  digitalWrite(pinRightP, HIGH);\n  digitalWrite(pinLeftN, LOW);\n  digitalWrite(pinLeftP, HIGH);\n  delay(driveTime);\n}\nThen, you can replace lines 35-40 with driveForward(straightTime);. The function will then run, setting driveTime equal to straightTime."
+  },
+  {
+    "objectID": "intro.html#tweak-your-variables",
+    "href": "intro.html#tweak-your-variables",
+    "title": "Intro to Arduino",
+    "section": "3.2 Tweak your variables",
+    "text": "3.2 Tweak your variables\nThough the pin variables need those values for the Arduino to control the motors, there’s nothing magic about the values of straightTime, turnTime, and the delay in line 34. Play around with them to see how they affect the car’s behavior. Can you make the car follow a square path? A triangle? A circle?"
+  },
+  {
+    "objectID": "intro.html#control-motor-speed",
+    "href": "intro.html#control-motor-speed",
+    "title": "Intro to Arduino",
+    "section": "3.3 Control motor speed",
+    "text": "3.3 Control motor speed\nOur original sketch sets the two speed pins to HIGH, which means the motors will run at full speed. What if we could set the pin partway between HIGH and LOW, so the motors run at a slower speed?\nWe can, sort of! It’s not possible to set the pin to a voltage between HIGH and LOW, but pulse-width modulation (PWM) has almost the same effect. By switching between HIGH and LOW very quickly, and varying how long the pin is HIGH versus how long it is LOW, we can control the average voltage that the motor receives.\n\n\n\nLast Minute Engineers\n\n\nTo use PWM on a pin that supports it, you can use the analogWrite function instead of digitalWrite: instead of LOW or HIGH, we pass a number between 0 and 255. The larger the number, the longer the pin is HIGH in each cycle, and the more power the motor receives.\n// Slowly drive toward the left instead of forward quickly\nanalogWrite(pinRightSpeed, 128); // 50% power\nanalogWrite(pinLeftSpeed, 64); // 25% power"
+  },
+  {
+    "objectID": "final.html",
+    "href": "final.html",
+    "title": "Finale",
+    "section": "",
+    "text": "Objective:\n\n\n\n\n\nCombine the ultrasonic and IR sensors to build a car that can avoid obstacles and follow a line\nTune your car for maximum performance\nTake home the gold for the fastest car on the course!\n\n\n\n\n\n1 Background\n\n1.0.1 Combining Sensors\nIn this final project, you’ll combine the ultrasonic sensor and the IR sensors to build a car that can follow a line while avoiding obstacles. The ultrasonic sensor will be used to detect obstacles in front of the car, while the IR sensors will be used to follow the line. When the car detects a line, it should keep following it as in the earlier example. Where there is no line, it will need to use the ultrasonic sensor to avoid obstacles and find a clear path.\nStuck on how to combine the two? Try this:\n\n\n\n\n\n\n (hint…)\n\n\n\n\n\n\n\n\n#include &lt;Servo.h&gt;\n\n\n\nServo servo_A2;\n\n\n\nint pinTrigger = A1;\n\nint pinEcho = A0;\n\n\n\nint pinSensorLeft = 9;\n\nint pinSensorCenter = 10;\n\nint pinSensorRight = 11;\n\n\n\nint pinRightN = 2;\n\nint pinRightP = 4;\n\nint pinLeftN = 7;\n\nint pinLeftP = 8;\n\nint pinRightSpeed = 5;\n\nint pinLeftSpeed = 6;\n\n\n\nint Black=1;\n\n\n\n\n\nServo servo_A2;\n\n\n\nvoid driveForward(int car_speed)\n\n{\n\n    digitalWrite(pinRightN, LOW);\n\n    digitalWrite(pinRightP, HIGH);\n\n    digitalWrite(pinLeftN, LOW);\n\n    digitalWrite(pinLeftP, HIGH);\n\n    analogWrite(pinRightSpeed, car_speed);\n\n    analogWrite(pinLeftSpeed, car_speed);\n\n}\n\n\n\nvoid driveBackward(int car_speed)\n\n{\n\n    digitalWrite(pinRightN, HIGH);\n\n    digitalWrite(pinRightP, LOW);\n\n    digitalWrite(pinLeftN, HIGH);\n\n    digitalWrite(pinLeftP, LOW);\n\n    analogWrite(pinRightSpeed, car_speed);\n\n    analogWrite(pinLeftSpeed, car_speed);\n\n}\n\n\n\nvoid driveLeft(int car_speed)\n\n{\n\n    digitalWrite(pinRightN, LOW);\n\n    digitalWrite(pinRightP, HIGH);\n\n    digitalWrite(pinLeftN, HIGH);\n\n    digitalWrite(pinLeftP, LOW);\n\n    analogWrite(pinRightSpeed, car_speed);\n\n    analogWrite(pinLeftSpeed, car_speed);\n\n}\n\n\n\nvoid driveRight(int car_speed)\n\n{\n\n    digitalWrite(pinRightN, HIGH);\n\n    digitalWrite(pinRightP, LOW);\n\n    digitalWrite(pinLeftN, LOW);\n\n    digitalWrite(pinLeftP, HIGH);\n\n    analogWrite(pinRightSpeed, car_speed);\n\n    analogWrite(pinLeftSpeed, car_speed);\n\n}\n\n\n\nvoid STOP()\n\n{\n\n    digitalWrite(pinRightN, HIGH);\n\n    digitalWrite(pinRightP, HIGH);\n\n    digitalWrite(pinLeftN, HIGH);\n\n    digitalWrite(pinLeftP, HIGH);\n\n    analogWrite(pinRightSpeed, 0);\n\n    analogWrite(pinLeftSpeed, 0);\n\n}\n\n\n\nfloat checkDistance()\n\n{\n\n    digitalWrite(pinTrigger, LOW);\n\n    delayMicroseconds(2);\n\n    digitalWrite(pinTrigger, HIGH);\n\n    delayMicroseconds(10);\n\n    digitalWrite(pinTrigger, LOW);\n\n    float distance = pulseIn(pinEcho, HIGH) / 58.00;\n\n    delay(10);\n\n    return distance;\n\n}\n\n\n\nvoid setup()\n\n{\n\n    pinMode(pinSensorLeft, INPUT);\n\n    pinMode(pinSensorCenter, INPUT);\n\n    pinMode(pinSensorRight, INPUT);\n\n    pinMode(pinRightN, OUTPUT);\n\n    pinMode(pinRightP, OUTPUT);\n\n    pinMode(pinLeftN, OUTPUT);\n\n    pinMode(pinLeftP, OUTPUT);\n\n    pinMode(pinRightSpeed, OUTPUT);\n\n    pinMode(pinLeftSpeed, OUTPUT);\n\n\n\n    pinmode(pinTrigger, OUTPUT);\n\n    pinMode(pinEcho, INPUT);\n\n\n\n    servo_A2.attach(A2);\n\n    servo_A2.write(90); // Set servo to initial position\n\n}\n\n\n\nvoid loop()\n\n{\n\n    // Read the line sensors\n\n    int Left_Tra_Value = digitalRead(9);\n\n    int Center_Tra_Value = digitalRead(10);\n\n    int Right_Tra_Value = digitalRead(11);\n\n\n\n    if (Left_Tra_Value != Black && (Center_Tra_Value  && Right_Tra_Value != Black))\n\n    {\n\n        Move_Forward(130);\n\n    }\n\n    else if (Left_Tra_Value  && (Center_Tra_Value  && Right_Tra_Value != Black))\n\n    {\n\n        Rotate_Left(180);\n\n    }\n\n    else if (Left_Tra_Value  && (Center_Tra_Value != Black && Right_Tra_Value != Black))\n\n    {\n\n        Rotate_Left(160);\n\n    }\n\n    else if (Left_Tra_Value != Black && (Center_Tra_Value != Black && Right_Tra_Value ))\n\n    {\n\n        Rotate_Right(160);\n\n    }\n\n    else if (Left_Tra_Value != Black && (Center_Tra_Value  && Right_Tra_Value ))\n\n    {\n\n        Rotate_Right(180);\n\n    }\n\n    else\n\n    {\n\n        // No line detected, check for obstacles\n\n        servo_A2.write(90);\n\n        float Front_Distance = checkdistance();\n\n\n\n        if (0 &lt; Front_Distance && Front_Distance &lt;= 20)\n\n        {\n\n            STOP();\n\n            delay(100);\n\n            // Look left and measure nearest distance...\n\n            servo_A2.write(180);\n\n            delay(500);\n\n            float Left_Distance = checkdistance();\n\n            delay(100);\n\n            // Look right and measure nearest distance...\n\n            servo_A2.write(0);\n\n            delay(500);\n\n            float Right_Distance = checkdistance();\n\n            delay(100);\n\n            // Compare distances and decide which way to turn\n\n            if (Right_Distance &lt;= Left_Distance)\n\n            {\n\n                Rotate_Left(255);\n\n                servo_A2.write(90);\n\n                delay(300);\n\n            }\n\n            else\n\n            {\n\n                Rotate_Right(255);\n\n                servo_A2.write(90);\n\n                delay(300);\n\n            }\n\n        }\n\n        else\n\n        {\n\n            // No obstacles detected, move forward\n\n            Move_Forward(150);\n\n        }\n\n    }\n\n}\n\n\n\n\n\n\n\n\n\n\nReuseCC BY-SA 4.0"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n\n\nReuseCC BY-SA 4.0"
+  }
+]
