@@ -1,0 +1,159 @@
+---
+title: "Intro to Arduino"
+subtitle: "Hello car!"
+---
+
+:::{.callout-objective}
+- Learn the basics of Arduino programming
+- Learn how to control motors with an Arduino
+- Build a simple car that can drive forward, backward, and turn
+:::
+
+# Background
+
+### Arduino {ico="simple-icons:arduino"}
+
+The Arduino is an open-source electronics platform based on easy-to-use
+hardware and software.
+
+An Arduino board is the *hardware* component of the Arduino platform. Each is
+based around a particular microcontroller, a tiny self-contained computer. If
+you need to read sensors, control motors, otherwise interact with the physical
+world, a microcontroller is the way to go: unlike a full computer, a
+microcontroller is dedicated to running just one program, day in and day out.
+
+The Arduino *software*, the IDE, contains everything you need to write your own
+code and upload it to the board. Because the Arduino project is open-source,
+over the years numerous people (and companies) have created their own versions
+of the Arduino board, with different features and capabilities. Because they
+share this common interface, you can usually upload the *same code* with the
+*same IDE* to *any* Arduino-compatible board.
+
+::: callout-tip
+You can find complete documentation for the Arduino platform at
+<https://www.arduino.cc/reference/en/>. The IDE itself is available for
+download at <https://www.arduino.cc/en/software>.
+:::
+
+
+::: {.callout-note}
+Arduino code is C++, though it mostly sticks with the simpler parts of the language that it shares with C. A professional working with a microcontroller will likely use *the very same language* in their project; Arduino makes the language more accessible for learners by handling some of the more complex tasks automatically, and wrapping others into a much more intuitive set of commands.
+::: 
+
+### Variables {ico="mdi:variable"}
+
+A variable is a named storage location in a program that holds a value. In C/C++,
+you must declare a variable before you can use it, specifying its type (like
+`int`, `float`, or `char`) and a name. You can then assign a value to the
+variable using the assignment operator `=`.
+
+For example, the following code declares an integer variable `x` and assigns it the value `5`:
+
+```cpp
+int x;
+x = 5;
+```
+
+You can combine the two steps in a single line, if you wish: [`int x = 5;`]{.cpp}
+
+Think of the assignment operator like an arrow pointing left: `label <- value`, because the destination (variable) always comes first, then the value you want to assign to it.
+
+Variables can be used to store a wide range of values, from numbers to text to
+more complex data structures. They can also be used to store the result of
+calculations, making it easy to reuse the value later in the program.
+
+
+## Structure of an Arduino sketch
+
+
+## [Hardware](https://chapman0-my.sharepoint.com/:p:/g/personal/cgirard_chapman_edu/EQcMNmNuMEJOn5DRQ_-mrjEBhao07SD8RUOTy2kzXDoqEA?e=5p3r90&nav=eyJzSWQiOjM4MSwiY0lkIjo5ODUyNjcxNjN9)
+
+Though the Arduino's `digitalWrite` lets you set a pin to either 5V (HIGH) or 0V (LOW), the amount of *power* that the Arduino can provide is very limited. Thus, we need another component that listens to the Arduino and switches power to the motors on and off. This is called a *motor driver*.
+
+The L298N fills that role in your kit. A HIGH signal on one of the input pins will connect the corresponding output pin to the power input; a LOW signal will connect it to ground instead. The power input can supply much more current than the Arduino, and at higher voltages, so the small signal from the Arduino can control the larger power supply to the motors.
+
+::: {}
+
+![](https://lastminuteengineers.com/wp-content/uploads/arduino/L298N-Motor-Driver-Module-Pinout.png){width=75%}
+
+::: cite
+[Last Minute Engineers](https://lastminuteengineers.com/l298n-dc-stepper-driver-arduino-tutorial/)
+:::
+
+:::
+
+Because the L298N has four input/output pairs, you can control two motors independently. This lets you go straight, turn left or right, and even go backward. The table below shows how to set the inputs to control the motors:
+
+|Direction | IN1 (D2) | IN2 (D4) | IN3 (D7) | IN4 (D8) |
+|:---------:|:--------:|:--------:|:--------:|:--------:|
+| Forward   | LOW      | HIGH     | LOW      | HIGH     |
+| Backward  | HIGH     | LOW      | HIGH     | LOW      |
+| Left      | LOW      | HIGH     | HIGH     | LOW      |
+| Right     | HIGH     | LOW      | LOW      | HIGH     |
+| Stop      | LOW      | LOW      | LOW      | LOW      |
+
+# Code
+
+```{.cpp include="sketches/1-Intro/1-Intro.ino"}
+```
+
+
+# Modifications
+
+## Create your own functions
+
+```cpp
+void functionName(int functionParameter) {
+  // function code
+}
+```
+
+In this block:
+
+- `functionName` is the name of the function. You can name it anything you want, but it should be descriptive of what the function does.
+- `void` means that the function does not return a value. We will learn about functions that return values later.
+- `functionParameter` is the parameter that you pass to the function. You can name it anything you want, but it should be descriptive of what the parameter is. Because we are using `int`, the parameter must be an integer.
+
+:::{.callout-hint}
+You might define a function to drive the car forward for a certain amount of time:
+```{.cpp}
+void driveForward(int driveTime) {
+  digitalWrite(pinRightN, LOW);
+  digitalWrite(pinRightP, HIGH);
+  digitalWrite(pinLeftN, LOW);
+  digitalWrite(pinLeftP, HIGH);
+  delay(driveTime);
+}
+```
+
+Then, you can replace lines 35-40 with `driveForward(straightTime);`. The function will then run, setting `driveTime` equal to `straightTime`.
+:::
+
+
+## Tweak your variables
+
+Though the `pin` variables need those values for the Arduino to control the motors, there's nothing magic about the values of `straightTime`, `turnTime`, and the delay in line 34. Play around with them to see how they affect the car's behavior. Can you make the car follow a square path? A triangle? A circle? 
+
+## Control motor speed
+Our original sketch sets the two speed pins to HIGH, which means the motors will run at full speed. What if we could set the pin partway between HIGH and LOW, so the motors run at a slower speed?
+
+We can, sort of! It's not possible to set the pin to a voltage between HIGH and LOW, but *pulse-width modulation* (PWM) has almost the same effect. By switching between HIGH and LOW very quickly, and varying how long the pin is HIGH versus how long it is LOW, we can control the *average* voltage that the motor receives. 
+
+::: {}
+
+![](https://lastminuteengineers.com/wp-content/uploads/arduino/Pulse-Width-Modulation-PWM-Technique-with-Duty-Cycles.png){width=50%}
+
+::: cite
+[Last Minute Engineers](https://lastminuteengineers.com/l298n-dc-stepper-driver-arduino-tutorial/)
+:::
+
+:::
+
+To use PWM on a pin that supports it, you can use the `analogWrite` function instead of `digitalWrite`: instead of LOW or HIGH, we pass a number between 0 and 255. The larger the number, the longer the pin is HIGH in each cycle, and the more power the motor receives.
+
+```cpp
+// Slowly drive toward the left instead of forward quickly
+analogWrite(pinRightSpeed, 128); // 50% power
+analogWrite(pinLeftSpeed, 64); // 25% power
+```
+

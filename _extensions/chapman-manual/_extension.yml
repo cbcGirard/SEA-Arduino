@@ -1,0 +1,27 @@
+title: CanvasInline
+author: CBC Girard
+version: 1.0.0
+quarto-required: ">=1.4.0"
+contributes:
+  formats:
+    html:
+      toc: true
+      theme: [workbook.scss]
+      number-sections: true
+      number-depth: 4
+      show-answers: false
+      fig-align: center
+      code-copy: hover
+      # embed-resources: true
+      # filters: [custom-callouts]
+      title-block-categories:
+        - title
+        # - author
+        # - version
+        # - date
+        # - abstract
+        # - keywords
+      # format-resources:
+      #   - chapman.scss
+      filters: 
+        - custom-callouts

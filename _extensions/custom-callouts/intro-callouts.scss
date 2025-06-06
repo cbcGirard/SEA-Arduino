@@ -1,0 +1,33 @@
+@import './_extensions/chapman-manual/workbook.scss';
+
+/*-- scss:rules --*/
+div.callout.callout-style-default.callout-objective>.callout-header {
+background-color: color-mix(in srgb, #00966C, transparent 75%);
+}
+div.callout.callout-style-default.callout-objective{
+border-left-color: #00966C;}
+div.callout.callout-style-default.callout-hint>.callout-header {
+background-color: color-mix(in srgb, #6E6259, transparent 75%);
+}
+div.callout.callout-style-default.callout-hint{
+border-left-color: #6E6259;}
+div.callout.callout-style-default.callout-video>.callout-header {
+background-color: color-mix(in srgb, #e67418, transparent 75%);
+}
+div.callout.callout-style-default.callout-video{
+border-left-color: #e67418;}
+div.callout.callout-style-default.callout-troubleshooting>.callout-header {
+background-color: color-mix(in srgb, #68108E, transparent 75%);
+}
+div.callout.callout-style-default.callout-troubleshooting{
+border-left-color: #68108E;}
+div.callout.callout-style-default.callout-example>.callout-header {
+background-color: color-mix(in srgb, #009CA6, transparent 75%);
+}
+div.callout.callout-style-default.callout-example{
+border-left-color: #009CA6;}
+div.callout.callout-style-default.callout-detail>.callout-header {
+background-color: color-mix(in srgb, #DDCBA4, transparent 75%);
+}
+div.callout.callout-style-default.callout-detail{
+border-left-color: #DDCBA4;}

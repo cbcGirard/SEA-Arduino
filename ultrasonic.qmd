@@ -1,0 +1,121 @@
+---
+title: "Obstacle Avoidance"
+subtitle: "Ultrasonic sensor and servo motor"
+include-in-header:
+    - text: |
+        <script>
+        window.MathJax = {
+        tex: {
+            tags: 'ams'
+        }
+        };
+        </script>
+---
+
+::: {.callout-objective}
+- Learn how to use an ultrasonic sensor to detect obstacles
+- Learn how to use a servo motor to point the sensor in different directions
+- Combine the two to build a car that avoids obstacles
+:::
+
+
+# Background
+
+### Ultrasonic Sensors {ico="akar-icons:sound-on"}
+
+The sensor module in your kit is basically an electronic bat (the animal, not the baseball equipment): one of its metal cylinders is a speaker, and the other a microphone. By sending out a burst of sound and listening for the echo, the sensor can determine how far away an object is.
+
+
+::: {#fig-ultrasonic-timing}
+![Timing diagram](images/ultrasonic_timing.svg)
+
+Timing diagram of ultrasonic sensor operation. The sensor sends out a burst of sound when triggered, then listens for the echo; it then sets the `Echo` pin high for the same amount of time it took for the sound to return. The Arduino can measure this time to determine the distance to the object that reflected the sound.
+:::
+
+The speed of sound is about 340 m/s in air, and the echo's delay represents *twice* the distance to the object (since the sound has to travel to the object and back). The Arduino can measure this delay with its `pulseIn()` function (line 60), which returns the time in microseconds that a pin is high. The conversion from time to distance is straightforward:
+
+\begin{align*}
+\text{distance} &= \frac{1}{2} \times \text{speed} \times \text{time} \\
+ &= \frac{1}{2} \times 340 \, \text{m/s} \times \frac{\text{time}}{1,000,000 \, \mu\text{s/s}} \times 100 \, \text{cm/m} \\
+    &\approx \frac{1}{59}\, \text{cm/}\mu\text{s} \times \text{time} 
+    \end{align*}
+
+## Wiring
+
+![](/images/ultrasonic_wiring.png){width=100%}
+
+## Code
+```{.cpp include="sketches/3a-Ultrasonic/3a-Ultrasonic.ino"}
+```
+### Running the code
+When you first upload the code, you won't be able to tell it's running. To see what's happening, you'll need open the [Serial Monitor]{ico="uil:search" flip="horizontal"} in the top-right of the IDE. You should see the distance to the nearest object printed out every second or so. If you hold your hand in front of the sensor, you should see the distance change as you move your hand closer or farther away.
+
+![Accessing the serial monitor](/images/serial_monitor.png){width=100%}
+
+### Serial Communication {ico="mdi:cable-data"}
+
+Using the same USB cable you used to program the Arduino, you can transmit data between the computer and Arduino *as part of your running program*. Frequently, you'll want to use an Arduino for fast, consistently timed measurements in the real world, but then analyze and display that data on your computer, where you have more processing power and storage.
+
+The IDE's [Serial Monitor]{ico="uil:search" flip="horizontal"} (top-right of the window) allows you to see the data the Arduino is sending back to the computer, and the [Serial Plotter]{ico="icon-park-outline:waves"} (next to the Serial Monitor) can graph that data in real time. You can also write your own programs to read this data and do more complex analysis and real-time visualization, or even control the Arduino based on the data it sends back.
+
+
+::: {.callout-troubleshooting}
+The Arduino's serial port is a UART (Universal Asynchronous Receiver/Transmitter) connection, which means there isn't a shared clock signal between the Arduino and your computer, and both devices have to agree on how quickly data is transmitted (called the **baud rate**). 
+
+If the text in the Serial Monitor is garbled, or you're not seeing any data at all, you might have the wrong baud rate set. In the code, this will be the number you pass to `Serial.begin()` in the `setup()` function, which then configures the Arduino to communicate at that speed; in the Serial Monitor, it will be the number in the bottom-right corner of the window. Make sure these numbers match!
+
+:::
+
+# Servo Motor
+
+## Background
+
+### Hobby Servo Motors {ico="tabler:circuit-motor"}
+
+For small, low-cost applications like radio-controlled toys, hobby servos are a common way of generating precise movements through closed-loop control. Typically, the output shaft is linked to a potentiometer, which allows the motor to sense its position. When the motor is set to a different position, the onboard electronics sense the difference between actual and intended position and drive the internal DC motor until the two match (see @fig-servos).
+
+Because the servo's gearing greatly reduces the speed of the motor, the simple DC motor is able to adjust the position of the output shaft with high precision---fractions of a full rotation. This makes hobby servos ideal for applications like steering in radio-controlled cars, or controlling the angle of a robotic arm.
+
+
+
+::: {#fig-servos .parts layout="[1,1]"}
+![Various hobby servos](https://cdn.sparkfun.com/assets/learn_tutorials/5/2/6/servo-samples.jpg){.parts}
+
+::: cite
+Image from [Sparkfun](https://learn.sparkfun.com/tutorials/hobby-servo-tutorial#servo-motor-background)
+:::
+
+
+![Servo internals](https://cdn.sparkfun.com/assets/learn_tutorials/5/2/6/servo-guts_1.jpg){.parts}
+
+::: cite
+Image from [Sparkfun](https://learn.sparkfun.com/tutorials/hobby-servo-tutorial#servo-motor-background)
+:::
+
+:::
+
+The control signal for hobby servos is a sort of PWM signal, where the width of the pulse determines the desired position of the servo. The pulse is typically 1-2 ms long, and repeats every 20 ms. The servo's internal electronics use this signal to adjust the motor's position to match the desired position.
+
+![](images/Servo_Diagram.svg)
+
+::: cite
+<a href="https://commons.wikimedia.org/wiki/File:Servo_Diagram.svg">Stefan Tauner</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, via Wikimedia Commons
+
+:::
+
+
+
+
+
+# Wiring
+
+![](images/servo_wiring.png){width=100%}
+
+# Code
+```{.cpp include="sketches/3-Obstacles/3-Obstacles.ino"}
+```
+
+# Modifications
+## Check more directions
+Right now, the car only checks the front, left, and right directions for obstacles. Maybe you want to sweep the ultrasonic sensor and see what angle gives the clearest path?
+
