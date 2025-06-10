@@ -456,7 +456,7 @@ Figure&nbsp;1
 </span>
 <span id="cb1-82"><a href="#cb1-82"></a>    <span class="co">// _ * _
 </span></span>
-<span id="cb1-83"><a href="#cb1-83"></a>    driveForward<span class="op">(</span><span class="dv">130</span><span class="op">);</span>
+<span id="cb1-83"><a href="#cb1-83"></a>    driveForward<span class="op">(</span><span class="dv">100</span><span class="op">);</span>
 </span>
 <span id="cb1-84"><a href="#cb1-84"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>irLeft <span class="op">==</span> Black <span class="op">&amp;&amp;</span> <span class="op">(</span>irCenter <span class="op">==</span> Black <span class="op">&amp;&amp;</span> irRight <span class="op">!=</span> Black<span class="op">))</span> <span class="op">{</span>
 </span>
@@ -484,17 +484,23 @@ Figure&nbsp;1
 </span>
 <span id="cb1-96"><a href="#cb1-96"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>irLeft <span class="op">==</span> Black <span class="op">&amp;&amp;</span> <span class="op">(</span>irCenter <span class="op">==</span> Black <span class="op">&amp;&amp;</span> irRight <span class="op">==</span> Black<span class="op">))</span> <span class="op">{</span>
 </span>
-<span id="cb1-97"><a href="#cb1-97"></a>    STOP<span class="op">();</span>
+<span id="cb1-97"><a href="#cb1-97"></a>    <span class="co">// * * *
+</span></span>
+<span id="cb1-98"><a href="#cb1-98"></a>    driveForward<span class="op">(</span><span class="dv">75</span><span class="op">);</span>
 </span>
-<span id="cb1-98"><a href="#cb1-98"></a>  <span class="op">}</span>
+<span id="cb1-99"><a href="#cb1-99"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>irLeft <span class="op">!=</span> Black <span class="op">&amp;&amp;</span> <span class="op">(</span>irCenter <span class="op">!=</span> Black <span class="op">&amp;&amp;</span> irRight<span class="op">!=</span>Black<span class="op">))</span> <span class="op">{</span>
 </span>
-<span id="cb1-99"><a href="#cb1-99"></a>
+<span id="cb1-100"><a href="#cb1-100"></a>    <span class="co">// _ _ _
+</span></span>
+<span id="cb1-101"><a href="#cb1-101"></a>    STOP<span class="op">();</span>
 </span>
-<span id="cb1-100"><a href="#cb1-100"></a>  delay<span class="op">(</span><span class="dv">100</span><span class="op">);</span>
+<span id="cb1-102"><a href="#cb1-102"></a>  <span class="op">}</span>
 </span>
-<span id="cb1-101"><a href="#cb1-101"></a>
+<span id="cb1-103"><a href="#cb1-103"></a>    
 </span>
-<span id="cb1-102"><a href="#cb1-102"></a><span class="op">}</span>
+<span id="cb1-104"><a href="#cb1-104"></a>
+</span>
+<span id="cb1-105"><a href="#cb1-105"></a><span class="op">}</span>
 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="modifications" class="level1" data-number="4">
