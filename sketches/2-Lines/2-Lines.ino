@@ -80,7 +80,7 @@ void loop(){
 
   if (irLeft != Black && (irCenter == Black && irRight != Black)) {
     // _ * _
-    driveForward(130);
+    driveForward(100);
   } else if (irLeft == Black && (irCenter == Black && irRight != Black)) {
     // * * _
     driveLeft(180);
@@ -94,9 +94,12 @@ void loop(){
     // _ * *
     driveRight(180);
   } else if (irLeft == Black && (irCenter == Black && irRight == Black)) {
+    // * * *
+    driveForward(75);
+  } else if (irLeft != Black && (irCenter != Black && irRight!=Black)) {
+    // _ _ _
     STOP();
   }
-
-  delay(100);
+    
 
 }

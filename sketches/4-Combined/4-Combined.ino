@@ -19,9 +19,6 @@ int pinLeftSpeed = 6;
 
 int Black=1;
 
-
-Servo servo_A2;
-
 void driveForward(int car_speed)
 {
     digitalWrite(pinRightN, LOW);
@@ -96,7 +93,7 @@ void setup()
     pinMode(pinRightSpeed, OUTPUT);
     pinMode(pinLeftSpeed, OUTPUT);
 
-    pinmode(pinTrigger, OUTPUT);
+    pinMode(pinTrigger, OUTPUT);
     pinMode(pinEcho, INPUT);
 
     servo_A2.attach(A2);
@@ -112,29 +109,33 @@ void loop()
 
     if (Left_Tra_Value != Black && (Center_Tra_Value  && Right_Tra_Value != Black))
     {
-        Move_Forward(130);
+        driveForward(100);
     }
     else if (Left_Tra_Value  && (Center_Tra_Value  && Right_Tra_Value != Black))
     {
-        Rotate_Left(180);
+        driveLeft(180);
     }
     else if (Left_Tra_Value  && (Center_Tra_Value != Black && Right_Tra_Value != Black))
     {
-        Rotate_Left(160);
+        driveLeft(160);
     }
     else if (Left_Tra_Value != Black && (Center_Tra_Value != Black && Right_Tra_Value ))
     {
-        Rotate_Right(160);
+        driveRight(160);
     }
     else if (Left_Tra_Value != Black && (Center_Tra_Value  && Right_Tra_Value ))
     {
-        Rotate_Right(180);
+        driveRight(180);
+    }
+    else if (Left_Tra_Value && (Center_Tra_Value && Right_Tra_Value))
+    {
+        driveForward(75);
     }
     else
     {
         // No line detected, check for obstacles
         servo_A2.write(90);
-        float Front_Distance = checkdistance();
+        float Front_Distance = checkDistance();
 
         if (0 < Front_Distance && Front_Distance <= 20)
         {
@@ -143,23 +144,23 @@ void loop()
             // Look left and measure nearest distance...
             servo_A2.write(180);
             delay(500);
-            float Left_Distance = checkdistance();
+            float Left_Distance = checkDistance();
             delay(100);
             // Look right and measure nearest distance...
             servo_A2.write(0);
             delay(500);
-            float Right_Distance = checkdistance();
+            float Right_Distance = checkDistance();
             delay(100);
             // Compare distances and decide which way to turn
             if (Right_Distance <= Left_Distance)
             {
-                Rotate_Left(255);
+                driveLeft(255);
                 servo_A2.write(90);
                 delay(300);
             }
             else
             {
-                Rotate_Right(255);
+                driveRight(255);
                 servo_A2.write(90);
                 delay(300);
             }
@@ -167,7 +168,7 @@ void loop()
         else
         {
             // No obstacles detected, move forward
-            Move_Forward(150);
+            driveForward(150);
         }
     }
 }
