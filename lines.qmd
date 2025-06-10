@@ -36,4 +36,4 @@ When the sensor is over a light-colored or reflective surface, the IR light refl
 
 # Modifications
 
-To adjust the speed, you might change the values you give to `driveRight()` and `driveLeft()`. Similarly, changing the value of `delay` in line 100 will change how long the car waits before checking the sensors again. What happens if the delay is too short? Too long?
+To adjust the speed, and thus amount of turning, you might change the values you give to `driveRight()` and `driveLeft()`, and `driveForward()`.

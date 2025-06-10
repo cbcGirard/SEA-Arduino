@@ -120,13 +120,13 @@ void loop()
     // Compare distances and turn accordingly
     if (Right_Distance <= Left_Distance)
     {
-      driveLeft(255);
-      delay(300);
+      driveLeft(130);
+      delay(600);
     }
     else
     {
-      driveRight(255);
-      delay(300);
+      driveRight(130);
+      delay(600);
     }
   }
   else
