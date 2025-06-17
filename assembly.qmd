@@ -1,0 +1,102 @@
+---
+title: Assembly
+---
+
+:::{.callout-objective}
+- Assemble the car's mechanical parts
+- Wire the car's electrical components
+- Learn how to solder
+:::
+
+# Mechanical Assembly
+
+It's easiest to connect everything to the top and bottom plates first, then add the wires, and finally connect top and bottom plates together. That means you'll skip ahead to the wiring after page 19, then come back to page 20 to finish the assembly.
+
+::: {.callout-important}
+When you assemble the 4 motors (manual pages 3-7), make sure half have the red wire closer to the threads in the bracket (like page 3), and the other half have the *black* wire closer to the threads (like page 4).
+:::
+
+::: {.callout-tip}
+At first, only give a screw a turn or two instead of tightening it all the way. Then, once you've put **all** the screws into the part, tighten them all the way. Fully tightening a screw can make it difficult to line up the remaining screws.
+:::
+
+::: {.callout-tip}
+You'll often see screws with pointy tips, especially when using wood or plastic; these create their own thread as you screw them in. However, the kit uses *machine screws*, which have flat tips that screw into a matching thread in a nut or other metal part.
+
+Because these screws aren't meant to *create* a thread, it can be a little tricky to get them started. Try first screwing *counter-clockwise* ("lefty-loosey") until you feel a little click from the threads aligning; then, proceed to screw them in clockwise ("righty-tighty").
+:::
+
+# Wiring
+## Dupont connectors
+Most of the electrical connections in the kit use *Dupont connectors*, which are plastic housings that hold a single wire. Originally, the wires will be all stuck together in a *ribbon cable*, but you can peel one or more wires off (like string cheese) to use them separately.
+
+To make a connection, simply slide the plastic connector onto the metal pin of the component you want to connect to. The connector works on friction, so it may take a little force to get it on.
+
+## Screw terminals
+Unlike the other electrical connections in the kit, the motor and power connectors of the driver board use *screw terminals*. To connect a wire, you first loosen the screw (counter-clockwise), insert the wire into the hole that has opened up on the side, and then tighten the screw until it is snug, clamping the wire in place.
+
+::: {layout="[1,1]"}
+
+::: {}
+![Open](https://upload.wikimedia.org/wikipedia/commons/1/10/TERS-05-G-02PI-01.jpg)
+
+::: cite
+<a href="https://commons.wikimedia.org/wiki/File:TERS-05-G-02PI-01.jpg">oomlout</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0">CC BY-SA 2.0</a>, via Wikimedia Commons
+
+:::
+:::
+
+:::: {}
+
+![Closed](https://upload.wikimedia.org/wikipedia/commons/b/b7/TERS-35D-G-02PI-01.jpg)
+
+::: cite
+<a href="https://commons.wikimedia.org/wiki/File:TERS-35D-G-02PI-01.jpg">oomlout</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0">CC BY-SA 2.0</a>, via Wikimedia Commons
+
+:::
+
+::::
+
+:::
+
+
+
+
+
+## Soldering
+We'll use a different battery holder than the one from the kit, so we'll need to splice the wires together. 
+
+::: {#fig-soldering}
+![Soldering to splice wires ](https://cdn.sparkfun.com/assets/learn_tutorials/5/5/1/Soldering.jpg)
+
+::: {.cite}
+[Sparkfun](https://learn.sparkfun.com/tutorials/working-with-wire#how-to-splice-wires)
+:::
+:::
+
+1. Cut the battery holder's wires as shown
+
+![](/images/wire_splice.png){width=50%}
+
+2. Strip the ends of the wires you just cut
+3. Slide a piece of heat-shrink tubing over each one of the wires
+4. Connect the new battery holder by twisting its wires to the existing wires---red to red, black to black
+5. Solder the wires together
+    - Put a little bit of solder on the tip of the iron to help it transfer heat
+    - Heat the wire with the soldering iron, **wait a couple seconds** then touch the solder to the **wire** until it melts and flows into the connection
+    - Remove the soldering iron and let the connection cool
+6. Slide the heat-shrink tubing over the soldered connection 
+
+::: {.callout-troubleshooting}
+Other than when you first put solder on the tip, you should never touch the solder directly with the soldering iron. Instead, use the iron to heat the wire, and then touch the solder to the wire. This allows the solder to melt and flow into the connection without burning the solder itself.
+
+:::
+
+::: {.callout-tip}
+Forgot to put the heat-shrink tubing on before soldering? No problem! You can use electrical tape from your kit to insulate the connection instead. Just wrap it around the soldered joint until it's well covered.
+:::
+
+# Manual
+This copy of the manual is annotated to show parts you can skip, and to clarify some of the trickier steps.
+
+![](Instructions_annotated.pdf){width=100% height=600px}

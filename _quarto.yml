@@ -9,8 +9,8 @@ website:
   title: "SEA-Arduino"
   navbar:
     left:
-      # - href: index.qmd
-      #   text: Home
+      - href: assembly.qmd
+        text: Assembly
       - href: intro.qmd
         text: Intro
       - href: lines.qmd

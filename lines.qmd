@@ -34,6 +34,10 @@ When the sensor is over a light-colored or reflective surface, the IR light refl
 ```{.cpp include="sketches/2-Lines/2-Lines.ino"}
 ```
 
+The car will not move until it detects a line. Once it does, it will start moving forward. If it detects the line on the left or right, it will turn in that direction to stay on the line. If it loses the line, it will stop until it finds the line again.
+
+There will be a small track on the desk for you to test your car.
+
 # Modifications
 
 To adjust the speed, and thus amount of turning, you might change the values you give to `driveRight()` and `driveLeft()`, and `driveForward()`.

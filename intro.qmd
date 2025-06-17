@@ -97,6 +97,7 @@ Because the L298N has four input/output pairs, you can control two motors indepe
 ```{.cpp include="sketches/1-Intro/1-Intro.ino"}
 ```
 
+To give the car enough room, set it on the floor after you upload the code. 
 
 # Modifications
 

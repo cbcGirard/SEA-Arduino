@@ -48,7 +48,7 @@ The speed of sound is about 340 m/s in air, and the echo's delay represents *twi
 ```{.cpp include="sketches/3a-Ultrasonic/3a-Ultrasonic.ino"}
 ```
 ### Running the code
-When you first upload the code, you won't be able to tell it's running. To see what's happening, you'll need open the [Serial Monitor]{ico="uil:search" flip="horizontal"} in the top-right of the IDE. You should see the distance to the nearest object printed out every second or so. If you hold your hand in front of the sensor, you should see the distance change as you move your hand closer or farther away.
+When you first upload the code, you won't be able to tell it's running and the car won't move. To see what's happening, you'll need open the [Serial Monitor]{ico="uil:search" flip="horizontal"} in the top-right of the IDE. You should see the distance to the nearest object printed out every second or so. If you hold your hand in front of the sensor, you should see the distance change as you move your hand closer or farther away.
 
 ![Accessing the serial monitor](/images/serial_monitor.png){width=100%}
 
