@@ -2,26 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://cbcGirard.github.io/SEA-Arduino/ultrasonic.html</loc>
-    <lastmod>2025-06-05T23:22:27.639Z</lastmod>
+    <lastmod>2025-06-17T22:55:09.571Z</lastmod>
   </url>
   <url>
-    <loc>https://cbcGirard.github.io/SEA-Arduino/index.html</loc>
-    <lastmod>2025-06-05T00:22:58.156Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cbcGirard.github.io/SEA-Arduino/lines.html</loc>
-    <lastmod>2025-06-10T02:27:27.280Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cbcGirard.github.io/SEA-Arduino/intro.html</loc>
-    <lastmod>2025-06-05T00:34:33.610Z</lastmod>
+    <loc>https://cbcGirard.github.io/SEA-Arduino/about.html</loc>
+    <lastmod>2025-05-21T15:07:18.853Z</lastmod>
   </url>
   <url>
     <loc>https://cbcGirard.github.io/SEA-Arduino/final.html</loc>
     <lastmod>2025-06-05T23:14:58.450Z</lastmod>
   </url>
   <url>
-    <loc>https://cbcGirard.github.io/SEA-Arduino/about.html</loc>
-    <lastmod>2025-05-21T15:07:18.853Z</lastmod>
+    <loc>https://cbcGirard.github.io/SEA-Arduino/intro.html</loc>
+    <lastmod>2025-06-17T22:52:12.283Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cbcGirard.github.io/SEA-Arduino/lines.html</loc>
+    <lastmod>2025-06-17T22:54:19.989Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cbcGirard.github.io/SEA-Arduino/index.html</loc>
+    <lastmod>2025-06-12T21:30:03.476Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cbcGirard.github.io/SEA-Arduino/assembly.html</loc>
+    <lastmod>2025-06-17T23:02:33.698Z</lastmod>
   </url>
 </urlset>
