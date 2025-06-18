@@ -41,3 +41,7 @@ There will be a small track on the desk for you to test your car.
 # Modifications
 
 To adjust the speed, and thus amount of turning, you might change the values you give to `driveRight()` and `driveLeft()`, and `driveForward()`.
+
+For best performance, you might also adjust the blue-and-white potentiometer on the IR sensor board. This will change the sensitivity of the sensors, allowing them to detect the line more reliably. Turn it clockwise to increase sensitivity, or counter-clockwise to decrease it.
+
+![Sensor adjusted for better performance](/images/ir_sensor.png)
