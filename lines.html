@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-20051e017c6b19db8f2a6796cc96be8a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-12b187d54574e233416853eaed806c10.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/iconify-icon-2.1.0/iconify-icon.min.js" type="module"></script>
 <script src="site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
 <script src="site_libs/quarto-contrib/iconify-2.1.0/iconify-pseudolist.js"></script>
@@ -167,7 +167,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">1</span> Background</a>
   <ul class="collapse">
-  <li><a href="#line-following-car" id="toc-line-following-car" class="nav-link" data-scroll-target="#line-following-car"><span class="header-section-number">1.0.1</span> <iconify-icon inline="" icon="mdi:car"></iconify-icon>Line Following Car</a></li>
+  <li><a href="#line-following-car" id="toc-line-following-car" class="nav-link" data-scroll-target="#line-following-car"><iconify-icon inline="" icon="mdi:car"></iconify-icon>Line Following Car</a></li>
   </ul></li>
   <li><a href="#wiring" id="toc-wiring" class="nav-link" data-scroll-target="#wiring"><span class="header-section-number">2</span> Wiring</a></li>
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code"><span class="header-section-number">3</span> Code</a></li>
@@ -223,8 +223,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="background" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Background</h1>
-<section id="line-following-car" class="level3" data-ico="mdi:car" data-number="1.0.1">
-<h3 data-ico="mdi:car" data-number="1.0.1" class="anchored" data-anchor-id="line-following-car"><span class="header-section-number">1.0.1</span> <iconify-icon inline="" icon="mdi:car"></iconify-icon>Line Following Car</h3>
+<section id="line-following-car" class="level3" data-ico="mdi:car">
+<h3 data-ico="mdi:car" class="anchored" data-anchor-id="line-following-car"><iconify-icon inline="" icon="mdi:car"></iconify-icon>Line Following Car</h3>
 <p>A line following car is a simple robot that can follow a line on the ground. It uses sensors to detect the line and adjust its direction accordingly. The most common sensors for this purpose are infrared (IR) sensors, which can detect the difference in reflectivity between the line and the surrounding surface.</p>
 <div id="fig-line-following" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
@@ -233,7 +233,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="./images/ir_diagram.png" class="img-fluid figure-img"></p>
+<p><img src="./images/ir_diagram.png" class="hcenter img-fluid figure-img" style="width:50.0%"></p>
 <figcaption>IR sensor in action</figcaption>
 </figure>
 </div>
@@ -512,6 +512,25 @@ Figure&nbsp;1
 <section id="modifications" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Modifications</h1>
 <p>To adjust the speed, and thus amount of turning, you might change the values you give to <code>driveRight()</code> and <code>driveLeft()</code>, and <code>driveForward()</code>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For best performance, you might also adjust the blue-and-white potentiometer on the IR sensor board. This will change the sensitivity of the sensors, allowing them to detect the line more reliably. Turn it clockwise to increase sensitivity, or counter-clockwise to decrease it. Around a 1/8 turn counter-clockwise (pictured below) is a good starting point.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/ir_sensor.png" class="hcenter img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>Sensor adjusted for better performance</figcaption>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>

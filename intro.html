@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-20051e017c6b19db8f2a6796cc96be8a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-12b187d54574e233416853eaed806c10.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/iconify-icon-2.1.0/iconify-icon.min.js" type="module"></script>
 <script src="site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
 <script src="site_libs/quarto-contrib/iconify-2.1.0/iconify-pseudolist.js"></script>
@@ -167,17 +167,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">1</span> Background</a>
   <ul class="collapse">
-  <li><a href="#arduino" id="toc-arduino" class="nav-link" data-scroll-target="#arduino"><span class="header-section-number">1.0.1</span> <iconify-icon inline="" icon="simple-icons:arduino"></iconify-icon>Arduino</a></li>
-  <li><a href="#variables" id="toc-variables" class="nav-link" data-scroll-target="#variables"><span class="header-section-number">1.0.2</span> <iconify-icon inline="" icon="mdi:variable"></iconify-icon>Variables</a></li>
-  <li><a href="#structure-of-an-arduino-sketch" id="toc-structure-of-an-arduino-sketch" class="nav-link" data-scroll-target="#structure-of-an-arduino-sketch"><span class="header-section-number">1.1</span> Structure of an Arduino sketch</a></li>
-  <li><a href="#hardware" id="toc-hardware" class="nav-link" data-scroll-target="#hardware"><span class="header-section-number">1.2</span> Hardware</a></li>
+  <li><a href="#arduino" id="toc-arduino" class="nav-link" data-scroll-target="#arduino"><iconify-icon inline="" icon="simple-icons:arduino"></iconify-icon>Arduino</a></li>
+  <li><a href="#variables" id="toc-variables" class="nav-link" data-scroll-target="#variables"><iconify-icon inline="" icon="mdi:variable"></iconify-icon>Variables</a></li>
+  <li><a href="#structure-of-an-arduino-sketch" id="toc-structure-of-an-arduino-sketch" class="nav-link" data-scroll-target="#structure-of-an-arduino-sketch"><iconify-icon inline="" icon="proicons:bullet-list-tree"></iconify-icon>Structure of an Arduino sketch</a></li>
+  <li><a href="#hardware" id="toc-hardware" class="nav-link" data-scroll-target="#hardware"><iconify-icon inline="" icon="eos-icons:hardware-circuit"></iconify-icon>Hardware</a></li>
   </ul></li>
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code"><span class="header-section-number">2</span> Code</a></li>
   <li><a href="#modifications" id="toc-modifications" class="nav-link" data-scroll-target="#modifications"><span class="header-section-number">3</span> Modifications</a>
   <ul class="collapse">
-  <li><a href="#create-your-own-functions" id="toc-create-your-own-functions" class="nav-link" data-scroll-target="#create-your-own-functions"><span class="header-section-number">3.1</span> Create your own functions</a></li>
-  <li><a href="#tweak-your-variables" id="toc-tweak-your-variables" class="nav-link" data-scroll-target="#tweak-your-variables"><span class="header-section-number">3.2</span> Tweak your variables</a></li>
-  <li><a href="#control-motor-speed" id="toc-control-motor-speed" class="nav-link" data-scroll-target="#control-motor-speed"><span class="header-section-number">3.3</span> Control motor speed</a></li>
+  <li><a href="#create-your-own-functions" id="toc-create-your-own-functions" class="nav-link" data-scroll-target="#create-your-own-functions"><iconify-icon inline="" icon="f7:function"></iconify-icon>Create your own functions</a></li>
+  <li><a href="#tweak-your-variables" id="toc-tweak-your-variables" class="nav-link" data-scroll-target="#tweak-your-variables"><iconify-icon inline="" icon="mdi:variable"></iconify-icon>Tweak your variables</a></li>
+  <li><a href="#control-motor-speed" id="toc-control-motor-speed" class="nav-link" data-scroll-target="#control-motor-speed"><iconify-icon inline="" icon="line-md:speed-loop"></iconify-icon>Control motor speed</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -232,8 +232,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="background" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Background</h1>
-<section id="arduino" class="level3" data-ico="simple-icons:arduino" data-number="1.0.1">
-<h3 data-ico="simple-icons:arduino" data-number="1.0.1" class="anchored" data-anchor-id="arduino"><span class="header-section-number">1.0.1</span> <iconify-icon inline="" icon="simple-icons:arduino"></iconify-icon>Arduino</h3>
+<section id="arduino" class="level3" data-ico="simple-icons:arduino">
+<h3 data-ico="simple-icons:arduino" class="anchored" data-anchor-id="arduino"><iconify-icon inline="" icon="simple-icons:arduino"></iconify-icon>Arduino</h3>
 <p>The Arduino is an open-source electronics platform based on easy-to-use hardware and software.</p>
 <p>An Arduino board is the <em>hardware</em> component of the Arduino platform. Each is based around a particular microcontroller, a tiny self-contained computer. If you need to read sensors, control motors, otherwise interact with the physical world, a microcontroller is the way to go: unlike a full computer, a microcontroller is dedicated to running just one program, day in and day out.</p>
 <p>The Arduino <em>software</em>, the IDE, contains everything you need to write your own code and upload it to the board. Because the Arduino project is open-source, over the years numerous people (and companies) have created their own versions of the Arduino board, with different features and capabilities. Because they share this common interface, you can usually upload the <em>same code</em> with the <em>same IDE</em> to <em>any</em> Arduino-compatible board.</p>
@@ -264,8 +264,8 @@ Note
 </div>
 </div>
 </section>
-<section id="variables" class="level3" data-ico="mdi:variable" data-number="1.0.2">
-<h3 data-ico="mdi:variable" data-number="1.0.2" class="anchored" data-anchor-id="variables"><span class="header-section-number">1.0.2</span> <iconify-icon inline="" icon="mdi:variable"></iconify-icon>Variables</h3>
+<section id="variables" class="level3" data-ico="mdi:variable">
+<h3 data-ico="mdi:variable" class="anchored" data-anchor-id="variables"><iconify-icon inline="" icon="mdi:variable"></iconify-icon>Variables</h3>
 <p>A variable is a named storage location in a program that holds a value. In C/C++, you must declare a variable before you can use it, specifying its type (like <code>int</code>, <code>float</code>, or <code>char</code>) and a name. You can then assign a value to the variable using the assignment operator <code>=</code>.</p>
 <p>For example, the following code declares an integer variable <code>x</code> and assigns it the value <code>5</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1"></a><span class="dt">int</span> x<span class="op">;</span></span>
@@ -274,15 +274,16 @@ Note
 <p>Think of the assignment operator like an arrow pointing left: <code>label &lt;- value</code>, because the destination (variable) always comes first, then the value you want to assign to it.</p>
 <p>Variables can be used to store a wide range of values, from numbers to text to more complex data structures. They can also be used to store the result of calculations, making it easy to reuse the value later in the program.</p>
 </section>
-<section id="structure-of-an-arduino-sketch" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="structure-of-an-arduino-sketch"><span class="header-section-number">1.1</span> Structure of an Arduino sketch</h2>
+<section id="structure-of-an-arduino-sketch" class="level2" data-ico="proicons:bullet-list-tree">
+<h2 data-ico="proicons:bullet-list-tree" class="anchored" data-anchor-id="structure-of-an-arduino-sketch"><iconify-icon inline="" icon="proicons:bullet-list-tree"></iconify-icon>Structure of an Arduino sketch</h2>
+<p>There are three main parts to an Arduino sketch: 1. <strong>Global variables</strong>: These are declared at the top of the sketch and can be used throughout the program. 2. <strong><code>setup()</code> function</strong>: This function is called <em>once</em> when the program starts. It is used to initialize variables, set pin modes, and perform any other setup tasks. 3. <strong><code>loop()</code> function</strong>: This function is called <em>repeatedly</em> after the <code>setup()</code> function has finished. It contains the main code that runs continuously while the program is running.</p>
 </section>
-<section id="hardware" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="hardware"><span class="header-section-number">1.2</span> <a href="https://chapman0-my.sharepoint.com/:p:/g/personal/cgirard_chapman_edu/EQcMNmNuMEJOn5DRQ_-mrjEBhao07SD8RUOTy2kzXDoqEA?e=5p3r90&amp;nav=eyJzSWQiOjM4MSwiY0lkIjo5ODUyNjcxNjN9">Hardware</a></h2>
+<section id="hardware" class="level2" data-ico="eos-icons:hardware-circuit">
+<h2 data-ico="eos-icons:hardware-circuit" class="anchored" data-anchor-id="hardware"><iconify-icon inline="" icon="eos-icons:hardware-circuit"></iconify-icon><a href="https://chapman0-my.sharepoint.com/:p:/g/personal/cgirard_chapman_edu/EQcMNmNuMEJOn5DRQ_-mrjEBhao07SD8RUOTy2kzXDoqEA?e=5p3r90&amp;nav=eyJzSWQiOjM4MSwiY0lkIjo5ODUyNjcxNjN9">Hardware</a></h2>
 <p>Though the Arduino’s <code>digitalWrite</code> lets you set a pin to either 5V (HIGH) or 0V (LOW), the amount of <em>power</em> that the Arduino can provide is very limited. Thus, we need another component that listens to the Arduino and switches power to the motors on and off. This is called a <em>motor driver</em>.</p>
 <p>The L298N fills that role in your kit. A HIGH signal on one of the input pins will connect the corresponding output pin to the power input; a LOW signal will connect it to ground instead. The power input can supply much more current than the Arduino, and at higher voltages, so the small signal from the Arduino can control the larger power supply to the motors.</p>
 <div>
-<p><img src="https://lastminuteengineers.com/wp-content/uploads/arduino/L298N-Motor-Driver-Module-Pinout.png" class="img-fluid" style="width:75.0%"></p>
+<p><img src="https://lastminuteengineers.com/wp-content/uploads/arduino/L298N-Motor-Driver-Module-Pinout.png" class="hcenter img-fluid" style="width:75.0%"></p>
 <div class="cite">
 <p><a href="https://lastminuteengineers.com/l298n-dc-stepper-driver-arduino-tutorial/">Last Minute Engineers</a></p>
 </div>
@@ -400,8 +401,8 @@ Note
 </section>
 <section id="modifications" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Modifications</h1>
-<section id="create-your-own-functions" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="create-your-own-functions"><span class="header-section-number">3.1</span> Create your own functions</h2>
+<section id="create-your-own-functions" class="level2" data-ico="f7:function">
+<h2 data-ico="f7:function" class="anchored" data-anchor-id="create-your-own-functions"><iconify-icon inline="" icon="f7:function"></iconify-icon>Create your own functions</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1"></a><span class="dt">void</span> functionName<span class="op">(</span><span class="dt">int</span> functionParameter<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a>  <span class="co">// function code</span></span>
 <span id="cb3-3"><a href="#cb3-3"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -438,16 +439,16 @@ Note
 </div>
 </div>
 </section>
-<section id="tweak-your-variables" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="tweak-your-variables"><span class="header-section-number">3.2</span> Tweak your variables</h2>
+<section id="tweak-your-variables" class="level2" data-ico="mdi:variable">
+<h2 data-ico="mdi:variable" class="anchored" data-anchor-id="tweak-your-variables"><iconify-icon inline="" icon="mdi:variable"></iconify-icon>Tweak your variables</h2>
 <p>Though the <code>pin</code> variables need those values for the Arduino to control the motors, there’s nothing magic about the values of <code>straightTime</code>, <code>turnTime</code>, and the delay in line 34. Play around with them to see how they affect the car’s behavior. Can you make the car follow a square path? A triangle? A circle?</p>
 </section>
-<section id="control-motor-speed" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="control-motor-speed"><span class="header-section-number">3.3</span> Control motor speed</h2>
+<section id="control-motor-speed" class="level2" data-ico="line-md:speed-loop">
+<h2 data-ico="line-md:speed-loop" class="anchored" data-anchor-id="control-motor-speed"><iconify-icon inline="" icon="line-md:speed-loop"></iconify-icon>Control motor speed</h2>
 <p>Our original sketch sets the two speed pins to HIGH, which means the motors will run at full speed. What if we could set the pin partway between HIGH and LOW, so the motors run at a slower speed?</p>
 <p>We can, sort of! It’s not possible to set the pin to a voltage between HIGH and LOW, but <em>pulse-width modulation</em> (PWM) has almost the same effect. By switching between HIGH and LOW very quickly, and varying how long the pin is HIGH versus how long it is LOW, we can control the <em>average</em> voltage that the motor receives.</p>
 <div>
-<p><img src="https://lastminuteengineers.com/wp-content/uploads/arduino/Pulse-Width-Modulation-PWM-Technique-with-Duty-Cycles.png" class="img-fluid" style="width:50.0%"></p>
+<p><img src="https://lastminuteengineers.com/wp-content/uploads/arduino/Pulse-Width-Modulation-PWM-Technique-with-Duty-Cycles.png" class="hcenter img-fluid" style="width:50.0%"></p>
 <div class="cite">
 <p><a href="https://lastminuteengineers.com/l298n-dc-stepper-driver-arduino-tutorial/">Last Minute Engineers</a></p>
 </div>
