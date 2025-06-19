@@ -63,10 +63,16 @@ more complex data structures. They can also be used to store the result of
 calculations, making it easy to reuse the value later in the program.
 
 
-## Structure of an Arduino sketch
+## Structure of an Arduino sketch {ico="proicons:bullet-list-tree"}
+
+There are three main parts to an Arduino sketch:
+1. **Global variables**: These are declared at the top of the sketch and can be used throughout the program.
+2. **`setup()` function**: This function is called *once* when the program starts. It is used to initialize variables, set pin modes, and perform any other setup tasks.
+3. **`loop()` function**: This function is called *repeatedly* after the `setup()` function has finished. It contains the main code that runs continuously while the program is running.
 
 
-## [Hardware](https://chapman0-my.sharepoint.com/:p:/g/personal/cgirard_chapman_edu/EQcMNmNuMEJOn5DRQ_-mrjEBhao07SD8RUOTy2kzXDoqEA?e=5p3r90&nav=eyJzSWQiOjM4MSwiY0lkIjo5ODUyNjcxNjN9)
+
+## [Hardware](https://chapman0-my.sharepoint.com/:p:/g/personal/cgirard_chapman_edu/EQcMNmNuMEJOn5DRQ_-mrjEBhao07SD8RUOTy2kzXDoqEA?e=5p3r90&nav=eyJzSWQiOjM4MSwiY0lkIjo5ODUyNjcxNjN9) {ico="eos-icons:hardware-circuit"}
 
 Though the Arduino's `digitalWrite` lets you set a pin to either 5V (HIGH) or 0V (LOW), the amount of *power* that the Arduino can provide is very limited. Thus, we need another component that listens to the Arduino and switches power to the motors on and off. This is called a *motor driver*.
 
@@ -74,7 +80,7 @@ The L298N fills that role in your kit. A HIGH signal on one of the input pins wi
 
 ::: {}
 
-![](https://lastminuteengineers.com/wp-content/uploads/arduino/L298N-Motor-Driver-Module-Pinout.png){width=75%}
+![](https://lastminuteengineers.com/wp-content/uploads/arduino/L298N-Motor-Driver-Module-Pinout.png){.hcenter width=75%}
 
 ::: cite
 [Last Minute Engineers](https://lastminuteengineers.com/l298n-dc-stepper-driver-arduino-tutorial/)
@@ -101,7 +107,7 @@ To give the car enough room, set it on the floor after you upload the code.
 
 # Modifications
 
-## Create your own functions
+## Create your own functions {ico="f7:function"}
 
 ```cpp
 void functionName(int functionParameter) {
@@ -131,18 +137,18 @@ Then, you can replace lines 35-40 with `driveForward(straightTime);`. The functi
 :::
 
 
-## Tweak your variables
+## Tweak your variables {ico="mdi:variable"}
 
 Though the `pin` variables need those values for the Arduino to control the motors, there's nothing magic about the values of `straightTime`, `turnTime`, and the delay in line 34. Play around with them to see how they affect the car's behavior. Can you make the car follow a square path? A triangle? A circle? 
 
-## Control motor speed
+## Control motor speed {ico="line-md:speed-loop"}
 Our original sketch sets the two speed pins to HIGH, which means the motors will run at full speed. What if we could set the pin partway between HIGH and LOW, so the motors run at a slower speed?
 
 We can, sort of! It's not possible to set the pin to a voltage between HIGH and LOW, but *pulse-width modulation* (PWM) has almost the same effect. By switching between HIGH and LOW very quickly, and varying how long the pin is HIGH versus how long it is LOW, we can control the *average* voltage that the motor receives. 
 
 ::: {}
 
-![](https://lastminuteengineers.com/wp-content/uploads/arduino/Pulse-Width-Modulation-PWM-Technique-with-Duty-Cycles.png){width=50%}
+![](https://lastminuteengineers.com/wp-content/uploads/arduino/Pulse-Width-Modulation-PWM-Technique-with-Duty-Cycles.png){.hcenter width=50%}
 
 ::: cite
 [Last Minute Engineers](https://lastminuteengineers.com/l298n-dc-stepper-driver-arduino-tutorial/)

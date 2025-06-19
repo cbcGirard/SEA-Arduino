@@ -26,6 +26,7 @@ license: "CC BY-SA"
 format:
   chapman-manual-html:
     theme: [chapman.scss]
+    number-depth: 1
 
 code-line-numbers: true
 code-overflow: wrap

@@ -103,5 +103,12 @@ div.callout.callout-style-default.callout-hint>.callout-header {
 .cite {
     font-style: italic;
     font-size: 0.6em;
-    
+    text-align: center;
+}
+
+.hcenter {
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

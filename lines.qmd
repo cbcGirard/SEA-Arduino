@@ -12,7 +12,7 @@ title: Line following car
 A line following car is a simple robot that can follow a line on the ground. It uses sensors to detect the line and adjust its direction accordingly. The most common sensors for this purpose are infrared (IR) sensors, which can detect the difference in reflectivity between the line and the surrounding surface.
 
 ::: {#fig-line-following .parts layout="[1,1]"}
-![IR sensor in action](/images/ir_diagram.png)
+![IR sensor in action](/images/ir_diagram.png){.hcenter width=50%}
 :::
 
 When the sensor is over a light-colored or reflective surface, the IR light reflects back to the sensor, causing it to output a low signal (0). When the sensor is over a dark surface, like our line, the IR light does not reflect back and the sensor returns a high signal (1). By reading the signals from multiple sensors, the car can determine its position relative to the line and adjust its motors accordingly.
@@ -42,6 +42,9 @@ There will be a small track on the desk for you to test your car.
 
 To adjust the speed, and thus amount of turning, you might change the values you give to `driveRight()` and `driveLeft()`, and `driveForward()`.
 
-For best performance, you might also adjust the blue-and-white potentiometer on the IR sensor board. This will change the sensitivity of the sensors, allowing them to detect the line more reliably. Turn it clockwise to increase sensitivity, or counter-clockwise to decrease it.
+::: {.callout-tip}
+For best performance, you might also adjust the blue-and-white potentiometer on the IR sensor board. This will change the sensitivity of the sensors, allowing them to detect the line more reliably. Turn it clockwise to increase sensitivity, or counter-clockwise to decrease it. Around a 1/8 turn counter-clockwise (pictured below) is a good starting point.
 
-![Sensor adjusted for better performance](/images/ir_sensor.png)
+![Sensor adjusted for better performance](/images/ir_sensor.png){.hcenter width=50%}
+
+:::

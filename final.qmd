@@ -9,7 +9,7 @@ title: Finale
 :::
 
 # Background
-### Combining Sensors {ico="mdi:combine" flip="horizontal"}
+## Combining Sensors {ico="mdi:set-merge"}
 In this final project, you'll combine the ultrasonic sensor and the IR sensors to build a car that can follow a line while avoiding obstacles. The ultrasonic sensor will be used to detect obstacles in front of the car, while the IR sensors will be used to follow the line.
 When the car detects a line, it should keep following it as in the earlier example. Where there is no line, it will need to use the ultrasonic sensor to avoid obstacles and find a clear path.
 
