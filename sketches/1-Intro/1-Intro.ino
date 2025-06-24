@@ -27,8 +27,8 @@ void setup() {
 
     pinMode(pinRightSpeed,OUTPUT);
     pinMode(pinLeftSpeed,OUTPUT);
-    digitalWrite(pinRightSpeed, HIGH);
-    digitalWrite(pinLeftSpeed, HIGH); 
+    analogWrite(pinRightSpeed, 128);
+    analogWrite(pinLeftSpeed, 128); 
 }
 
 void loop() {
