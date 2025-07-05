@@ -18,6 +18,7 @@ include-in-header:
 - Combine the two to build a car that avoids obstacles
 :::
 
+# [Slides](https://https://chapman0-my.sharepoint.com/:p:/g/personal/cgirard_chapman_edu/EQcMNmNuMEJOn5DRQ_-mrjEBhao07SD8RUOTy2kzXDoqEA?e=YOpHOG&nav=eyJzSWQiOjMxNCwiY0lkIjozMTE4MTAwMzY5fQ) {ico="bi:file-slides" .unnumbered}
 
 # Background
 

@@ -7,6 +7,8 @@ title: Line following car
 - Build a simple line following car that can follow a line on the ground
 :::
 
+# [Slides](https://chapman0-my.sharepoint.com/:p:/g/personal/cgirard_chapman_edu/EQcMNmNuMEJOn5DRQ_-mrjEBhao07SD8RUOTy2kzXDoqEA?e=zFcvTO&nav=eyJzSWQiOjI2MiwiY0lkIjoyOTk2MzQyNDIzfQ) {ico="bi:file-slides" .unnumbered}
+
 # Background
 ### Line Following Car {ico="mdi:car"}
 A line following car is a simple robot that can follow a line on the ground. It uses sensors to detect the line and adjust its direction accordingly. The most common sensors for this purpose are infrared (IR) sensors, which can detect the difference in reflectivity between the line and the surrounding surface.

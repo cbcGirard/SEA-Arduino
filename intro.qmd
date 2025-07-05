@@ -9,6 +9,8 @@ subtitle: "Hello car!"
 - Build a simple car that can drive forward, backward, and turn
 :::
 
+# [Slides](https://chapman0-my.sharepoint.com/:p:/g/personal/cgirard_chapman_edu/EQcMNmNuMEJOn5DRQ_-mrjEBhao07SD8RUOTy2kzXDoqEA?e=QkZbsu&nav=eyJzSWQiOjMzNiwiY0lkIjo0MjA2OTQwNjI0fQ) {ico="bi:file-slides" .unnumbered}
+
 # Background
 
 ### Arduino {ico="simple-icons:arduino"}
